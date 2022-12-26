@@ -3,10 +3,7 @@ import os
 import requests
 import time
 
-# Initial Settings
-client_id = '99074'
-client_secret = '4d6a1697ddafa8cd34c053c2db8cfb9fc68d75d9'
-redirect_uri = 'http://localhost/'
+from strava_constants import client_id, client_secret, redirect_uri
 
 # Authorization URL
 request_url = f'http://www.strava.com/oauth/authorize?client_id={client_id}' \

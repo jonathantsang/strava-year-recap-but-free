@@ -23,6 +23,9 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
 
             <h1>Page 3 - Kudos, Local legend and segment effort records</h1>
 
+            <h2>You got "xyz" kudos on your activities in 2022</h2>
+            <h2>Finding how many kudos you gave out is impossible from Strava's current API</h2>
+
             <h1>Page 4 - Total elevation and total distance</h1>
 
             <h1>Page 5 - Top photos</h1>

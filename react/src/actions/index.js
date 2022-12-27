@@ -19,6 +19,9 @@ export const setAthlete = (data) => {
   }
 }
 
+// Forms two maps using the activities
+// dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
+// hours_map: key: int object for hour (1-23) -> number of activities with that hour
 function getDateMaps(activities) {
     const dates_map = new Map()
     const hours_map = new Map()
@@ -38,6 +41,7 @@ function getDateMaps(activities) {
     return [dates_map, hours_map];
 }
 
+// Get the total days active in current_year by going through and counting them manually
 function getTotalDaysActive(dates_map, current_year = 2022) {
     const year_days = new Set();
     dates_map.forEach (function(value, key) {
@@ -46,7 +50,15 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
         }
     });
     return year_days.length();
+}
 
+// Get the total number of kudos you gave out
+function getTotalKudosReceived(activities) {
+    var total_kudos = 0;
+    for (const activity of activities) {
+        total_kudos += activity["kudos_received"];
+    }
+    return total_kudos;
 }
 
 export const setActivities = (data, page2 = [], page3 = [], page4 = []) => {
@@ -63,6 +75,8 @@ export const setActivities = (data, page2 = [], page3 = [], page4 = []) => {
 
     const days_active = getTotalDaysActive(date_maps[0]);
     date_maps.append(days_active);
+    const total_kudos = getTotalKudos(activities);
+    date_maps.append(total_kudos);
 
     return {
         type: "SET_ACTIVITIES",

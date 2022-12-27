@@ -13,12 +13,11 @@ Strava year in review has:
 - 2022 totals
 
 ## Todo
-
-✔️ get Oauth website example
-✔️ output (basic) data on frontend
-[ ] finish parsing/analytics to get the stats needed
-[ ] find a way to screenshot the data and save as an image
-[ ] figure out hosting and a domain
+- ✔️ get Oauth website example
+- ✔️ output (basic) data on frontend
+- [ ] finish parsing/analytics to get the stats needed
+- [ ] find a way to screenshot the data and save as an image
+- [ ] figure out hosting and a domain
 
 Resources:
 - https://www.grace-dev.com/python-apis/strava-api/

@@ -33,11 +33,19 @@ class StravaRedirect extends React.Component {
                 // Axios request to get users info
                 const user = await getAthleteStats(userID, accessToken);
                 const athlete = await getAthlete(accessToken);
-                const activities = await getActivities(accessToken);
+                // User might have more than 200 activities in a year
+
+                // Paginate a max of 800 activities
+                // if you have more, unfortunately due to rate limits I'm not going to
+                // analyze them
+                const activities = await getActivities(accessToken, 200, 1);
+                const page2 = await getActivities(accessToken, 200, 2);
+                const page3 = await getActivities(accessToken, 200, 3);
+                const page4 = await getActivities(accessToken, 200, 4);
 
                 this.props.setUserActivities(user);
                 this.props.setAthlete(athlete);
-                this.props.setActivities(activities);
+                this.props.setActivities(activities, page2, page3, page4);
 
                 // Once complete, go to display page
                 history.push("/yourdistance");
@@ -49,7 +57,7 @@ class StravaRedirect extends React.Component {
     }
 
     render() {
-        return <div>Loading</div>;
+        return <div>Loading...</div>;
     }
 }
 

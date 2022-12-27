@@ -53,10 +53,10 @@ export const getAthlete = async (accessToken) => {
     }
 };
 
-export const getActivities = async (accessToken, per_page = 5) => {
+export const getActivities = async (accessToken, per_page = 5, page = 1) => {
     try {
         const response = await axios.get(
-            `https://www.strava.com/api/v3/athlete/activities?per_page=${per_page}`,
+            `https://www.strava.com/api/v3/athlete/activities?per_page=${per_page}&page=${page}`,
             { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         return response;

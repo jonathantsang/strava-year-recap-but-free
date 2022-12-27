@@ -17,7 +17,7 @@ This gives:
 
 Resources:
 - https://www.grace-dev.com/python-apis/strava-api/
-
+- https://github.com/dunleavyjack/Strava-OAuth2-Test
 
 ideas:
 - some myers-briggs thing with bike archetype or something

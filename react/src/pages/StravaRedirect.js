@@ -38,10 +38,14 @@ class StravaRedirect extends React.Component {
                 // Paginate a max of 800 activities
                 // if you have more, unfortunately due to rate limits I'm not going to
                 // analyze them
-                const activities = await getActivities(accessToken, 200, 1);
-                const page2 = await getActivities(accessToken, 200, 2);
-                const page3 = await getActivities(accessToken, 200, 3);
-                const page4 = await getActivities(accessToken, 200, 4);
+
+                // testing 
+                const pagination_amount = 5;
+
+                const activities = await getActivities(accessToken, pagination_amount, 1);
+                const page2 = await getActivities(accessToken, pagination_amount, 2);
+                const page3 = await getActivities(accessToken, pagination_amount, 3);
+                const page4 = await getActivities(accessToken, pagination_amount, 4);
 
                 this.props.setUserActivities(user);
                 this.props.setAthlete(athlete);
@@ -57,7 +61,7 @@ class StravaRedirect extends React.Component {
     }
 
     render() {
-        return <div>Loading...</div>;
+        return <div>Loading...Please wait as it analyzes your Strava activities.</div>;
     }
 }
 

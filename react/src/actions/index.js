@@ -1,10 +1,24 @@
+function metreToMiles(amount) {
+    return Math.round(amount / 1609); // approximate
+}
+
+function metreToFeet(amount) {
+    return Math.round(amount * 3.281); // approximate
+}
+
 export const setUserActivities = (data) => {
+    console.log(data)
+    data.data.ytd_run_totals.distance = metreToMiles(data.data.ytd_run_totals.distance);
+    data.data.ytd_ride_totals.distance = metreToMiles(data.data.ytd_ride_totals.distance);
+    data.data.ytd_swim_totals.distance = metreToMiles(data.data.ytd_swim_totals.distance);
+
     return {
         type: "SET_USER_ACTIVITIES",
         payload: data,
     };
 };
 
+// This is for the token
 export const setUser = (data) => {
     return {
         type: "SET_USER",
@@ -28,6 +42,11 @@ function goThroughActivities(activities, current_year = 2022) {
     const sport_type_map = new Map();
     var total_kudos = 0; // calculates total kudos received
     var total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
+    var total_distance = 0; // total distance from activities (all sportTypes)
+    // Store the longest/largest elevation ride here
+    var longest_ride = null;
+    var biggest_climb_ride = null;
+    // Top kudos activity for photos
 
     // We do a bunch of stuff in one loop to save on loop computations because we potentially go through up to 800 activities
     for (const activity of activities) {
@@ -43,12 +62,33 @@ function goThroughActivities(activities, current_year = 2022) {
 
         total_elevation += activity["total_elevation_gain"];
 
-        sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"] === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1))
+        total_distance += activity["distance"];
+
+        sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"] === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1));
+
+        // Use enum values "MountainBikeRide" or "Ride" (no EBikes)
+        if (activity["sport_type"] === "MountainBikeRide" || activity["sport_type"] === "Ride") {
+            if (longest_ride == null || longest_ride.distance < activity.distance) {
+                longest_ride = activity;
+            }
+            if (biggest_climb_ride == null || biggest_climb_ride.total_elevation_gain < activity.total_elevation_gain) {
+                biggest_climb_ride = activity;
+            }
+        }
     }
 
     const days_active = getTotalDaysActive(dates_map, current_year);
 
-    return [dates_map, hours_map, days_active, total_kudos, total_elevation, sport_type_map];
+    return [
+        dates_map,
+        days_active,
+        total_kudos,
+        metreToMiles(total_distance),
+        metreToFeet(total_elevation),
+        sport_type_map,
+        longest_ride === null ? longest_ride : [longest_ride.name, new Date(longest_ride.start_date).toDateString(), metreToMiles(longest_ride.distance)], // may be null if no rides
+        biggest_climb_ride === null ? biggest_climb_ride : [biggest_climb_ride.name, new Date(longest_ride.start_date).toDateString(), metreToFeet(biggest_climb_ride.total_elevation_gain)]  // may be null if no rides
+    ]
 }
 
 // Get the total days active in current_year by going through and counting them manually

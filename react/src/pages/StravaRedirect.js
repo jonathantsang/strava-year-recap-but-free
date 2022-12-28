@@ -33,15 +33,14 @@ class StravaRedirect extends React.Component {
                 // Axios request to get users info
                 const user = await getAthleteStats(userID, accessToken);
                 const athlete = await getAthlete(accessToken);
-                // User might have more than 200 activities in a year
 
+                // testing
+                const pagination_amount = 5;
+
+                // User might have more than 200 activities in a year
                 // Paginate a max of 800 activities
                 // if you have more, unfortunately due to rate limits I'm not going to
                 // analyze them
-
-                // testing 
-                const pagination_amount = 5;
-
                 const activities = await getActivities(accessToken, pagination_amount, 1);
                 const page2 = await getActivities(accessToken, pagination_amount, 2);
                 const page3 = await getActivities(accessToken, pagination_amount, 3);

@@ -47,6 +47,8 @@ function goThroughActivities(activities, current_year = 2022) {
     var longest_ride = null;
     var biggest_climb_ride = null;
     // Top kudos activity for photos
+    // Just get top 3
+
 
     // We do a bunch of stuff in one loop to save on loop computations because we potentially go through up to 800 activities
     for (const activity of activities) {
@@ -100,6 +102,15 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
         }
     });
     return year_days.size;
+}
+
+function getTotalDaysActivePercent(total_days_active) {
+    // Interpolation of a regular distribution and trying to extrapolate with real data but
+    // also holding other stuff constant
+
+    // 309 is 1% (me)
+
+    return percentage;
 }
 
 export const setActivities = (data, page2 = [], page3 = [], page4 = []) => {

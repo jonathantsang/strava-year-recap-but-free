@@ -39,6 +39,12 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <h2>This is completely arbitrary and on different runs of Strava year in sport it gives different photos here</h2>
             <h2>That behaviour is replicated here:</h2>
 
+            <img src=""/>
+
+            <img src=""/>
+
+            <img src=""/>
+
             <h1>Page 6 - 2022 Totals</h1>
 
             <h1>Custom data</h1>

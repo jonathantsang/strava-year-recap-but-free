@@ -104,9 +104,11 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
     return year_days.size;
 }
 
+// TODO
 function getTotalDaysActivePercent(total_days_active) {
     // Interpolation of a regular distribution and trying to extrapolate with real data but
     // also holding other stuff constant
+    var percentage = null
 
     // 309 is 1% (me)
 

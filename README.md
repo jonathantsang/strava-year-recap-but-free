@@ -23,6 +23,25 @@ Resources:
 - https://www.grace-dev.com/python-apis/strava-api/
 - https://github.com/dunleavyjack/Strava-OAuth2-Test
 
+## Running Locally
+
+1. Run `npm install` in the react directory to install deps
+
+2. Run `npm start` to start the server at localhost:3000
+
+3. Go to `localhost:3000` and click "Connect with Strava"
+
+![Alt text](assets/home.png)
+
+4. Login with Strava (authorize all the data)
+
+![Alt text](assets/strava_login.png)
+
+5. If it loads correctly the stats should be in the redirect link of localhost:3000/yourdistance
+
+![Alt text](assets/stats_example.png)
+
+
 # Other ideas:
 - top 5 kudos buddies (top 5 people who gave you the most kudos)
 - some myers-briggs thing with bike archetype or something

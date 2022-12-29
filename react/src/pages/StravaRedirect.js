@@ -10,6 +10,7 @@ import {
     getAthleteStats,
     getAthlete,
     getActivities,
+    getPhotos,
 } from "../utils/functions";
 
 class StravaRedirect extends React.Component {
@@ -47,9 +48,11 @@ class StravaRedirect extends React.Component {
                 const page3 = await getActivities(accessToken, pagination_amount, 3);
                 const page4 = await getActivities(accessToken, pagination_amount, 4);
 
+                const photos = await getPhotos(accessToken, activities);
+
                 this.props.setUserActivities(user);
                 this.props.setAthlete(athlete);
-                this.props.setActivities(activities, page2, page3, page4);
+                this.props.setActivities(activities, page2, page3, page4, photos, accessToken);
 
                 // Once complete, go to display page
                 history.push("/yourdistance");

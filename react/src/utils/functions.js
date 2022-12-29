@@ -53,6 +53,18 @@ export const getAthlete = async (accessToken) => {
     }
 };
 
+export const getDetailedActivity = async (accessToken, id, urls) => {
+    try {
+        const response = await axios.get(
+            `https://www.strava.com/api/v3/activities/${id}`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getActivities = async (accessToken, per_page = 5, page = 1) => {
     try {
         const response = await axios.get(
@@ -64,3 +76,26 @@ export const getActivities = async (accessToken, per_page = 5, page = 1) => {
         console.log(error);
     }
 };
+
+export const getPhotos = async (accessToken, activities) => {
+    const urls = []
+    for(var i = 0; i < activities.data.length; i++) {
+        // Only need 3 photos
+        if (urls.length >= 3) {
+            break;
+        } else {
+            const activity = activities.data[i];
+            const date = new Date(activity["start_date_local"]);
+            // Find true strava photos
+            if (activity["total_photo_count"] - activity["photo_count"]) {
+                var detailed_activity = await getDetailedActivity(accessToken, activity["id"], urls);
+                detailed_activity = detailed_activity.data;
+                urls.push([detailed_activity["name"], date.toDateString(), detailed_activity["photos"]["primary"]["urls"][600]]);
+                console.log(urls);
+            }
+        }
+    }
+    console.log("END", urls)
+    return urls;
+
+}

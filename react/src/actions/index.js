@@ -7,7 +7,6 @@ function metreToFeet(amount) {
 }
 
 export const setUserActivities = (data) => {
-    console.log(data)
     data.data.ytd_run_totals.distance = metreToMiles(data.data.ytd_run_totals.distance);
     data.data.ytd_ride_totals.distance = metreToMiles(data.data.ytd_ride_totals.distance);
     data.data.ytd_swim_totals.distance = metreToMiles(data.data.ytd_swim_totals.distance);
@@ -36,7 +35,8 @@ export const setAthlete = (data) => {
 // Goes through the activities for analyzing data
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
 // hours_map: key: int object for hour (1-23) -> number of activities with that hour
-function goThroughActivities(activities, current_year = 2022) {
+function goThroughActivities(activities, photos, current_year = 2022) {
+    console.log("PHOTOS URLS?", photos);
     const dates_map = new Map();
     const hours_map = new Map();
     const sport_type_map = new Map();
@@ -46,9 +46,10 @@ function goThroughActivities(activities, current_year = 2022) {
     // Store the longest/largest elevation ride here
     var longest_ride = null;
     var biggest_climb_ride = null;
-    // Top kudos activity for photos
-    // Just get top 3
 
+    // Top kudos activity for photos
+    // Want top 3, but for now we get 3 most recent with photos
+    var activities_with_photos_ids = photos
 
     // We do a bunch of stuff in one loop to save on loop computations because we potentially go through up to 800 activities
     for (const activity of activities) {
@@ -69,7 +70,7 @@ function goThroughActivities(activities, current_year = 2022) {
 
             total_distance += activity["distance"];
 
-            sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"] === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1));
+            sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"]) === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1);
 
             // Use enum values "MountainBikeRide" or "Ride" (no EBikes)
             if (activity["sport_type"] === "MountainBikeRide" || activity["sport_type"] === "Ride") {
@@ -93,8 +94,9 @@ function goThroughActivities(activities, current_year = 2022) {
         metreToFeet(total_elevation),
         sport_type_map,
         longest_ride === null ? longest_ride : [longest_ride.name, new Date(longest_ride.start_date).toDateString(), metreToMiles(longest_ride.distance)], // may be null if no rides
-        biggest_climb_ride === null ? biggest_climb_ride : [biggest_climb_ride.name, new Date(longest_ride.start_date).toDateString(), metreToFeet(biggest_climb_ride.total_elevation_gain)]  // may be null if no rides
-    ]
+        biggest_climb_ride === null ? biggest_climb_ride : [biggest_climb_ride.name, new Date(longest_ride.start_date).toDateString(), metreToFeet(biggest_climb_ride.total_elevation_gain)],  // may be null if no rides
+        activities_with_photos_ids
+    ];
 }
 
 // Get the total days active in current_year by going through and counting them manually
@@ -109,7 +111,7 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
 }
 
 // TODO
-function getTotalDaysActivePercent(total_days_active) {
+function getTotalDaysActivePercentage(total_days_active) {
     // Interpolation of a regular distribution and trying to extrapolate with real data but
     // also holding other stuff constant
     var percentage = null
@@ -119,7 +121,7 @@ function getTotalDaysActivePercent(total_days_active) {
     return percentage;
 }
 
-export const setActivities = (data, page2 = [], page3 = [], page4 = []) => {
+export const setActivities = (data, page2 = [], page3 = [], page4 = [], photos = [], accessToken) => {
     // Pages have data in them
     var activities = data.data
     if (page2 != null && page2.data.length > 0) {
@@ -130,7 +132,7 @@ export const setActivities = (data, page2 = [], page3 = [], page4 = []) => {
     }
 
     const current_year = 2022
-    var final_data = goThroughActivities(activities, current_year);
+    var final_data = goThroughActivities(activities, photos, current_year);
 
     return {
         type: "SET_ACTIVITIES",

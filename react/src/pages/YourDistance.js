@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
-    console.log(activities)
+    console.log(activities);
+    // console.log(returnTokens); accessToken
     return (
         <div>
             <p>Want to hire me Strava?</p>
@@ -42,11 +43,26 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <h2>This is completely arbitrary and on different runs of Strava year in sport it gives different photos here</h2>
             <h2>That behaviour is replicated here:</h2>
 
-            <img src="" alt="strava embed"/>
+            {activities[8].length > 0 &&
+                <div>
+                    <p>{activities[8][0][0]} on {activities[8][0][1]}</p>
+                    <img src={activities[8][0][2]} alt="strava embed"/>
+                </div>
+            }
 
-            <img src="" alt="strava embed"/>
+            {activities[8].length > 1 &&
+                <div>
+                    <p>{activities[8][1][0]} on {activities[8][1][1]}</p>
+                    <img src={activities[8][1][2]} alt="strava embed"/>
+                </div>
+            }
 
-            <img src="" alt="strava embed"/>
+            {activities[8].length > 2 &&
+                <div>
+                    <p>{activities[8][2][0]} on {activities[8][2][1]}</p>
+                    <img src={activities[8][0][2]} alt="strava embed"/>
+                </div>
+            }
 
             <h1>Page 6 - 2022 Totals</h1>
 

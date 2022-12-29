@@ -4,8 +4,10 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+// Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
 import DirectionsBike from '@mui/icons-material/DirectionsBike';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 const StyledAvatar = ({ children, ...props }) => (
     <Avatar sx={{ height: '70px', width: '70px' }} {...props}>
@@ -13,18 +15,24 @@ const StyledAvatar = ({ children, ...props }) => (
     </Avatar>
 );
 
-function MediaCard(props) {
+const LargeStyledAvatar = ({ children, ...props }) => (
+    <Avatar sx={{ height: props.height, width: props.width, bgcolor: props.bgcolor }} {...props}>
+        {children}
+    </Avatar>
+);
+
+export function TotalsCard(props) {
   return (
-    <Card sx={{ maxWidth: 400 }}>
+    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" sx={{color:'white'}}>
+        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           Strava Year in Review but Free
         </Typography>
         <hr />
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" margin="0px">
           2022 TOTALS
         </Typography>
       </CardContent>
@@ -86,6 +94,50 @@ function MediaCard(props) {
 
 // Convert TopSport to a conditional with different sport icons
 
-export function TotalsCard(props) {
-    return (<MediaCard {...props} />);
+export function TotalDaysActiveCard(props) {
+  return (
+    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <CardContent header sx={{backgroundColor:'black'}}>
+        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
+          Strava Year in Review but Free
+        </Typography>
+        <hr />
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
+        <Typography gutterBottom variant="h5" component="div" margin="0px">
+          TOTAL DAYS ACTIVE
+        </Typography>
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <br />
+        <br />
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <LargeStyledAvatar height="200px" width="200px" bgcolor="#ff6600">
+          <WorkspacePremiumIcon sx={{width: "5rem", height: "5rem"}}/>
+        </LargeStyledAvatar>
+        <br />
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <Typography variant="h4" color="#ff6600">
+          Top {props.top_percentage}%
+        </Typography>
+        <br />
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <Typography variant="h6" color="text.primary">
+          MOST ACTIVE ON STRAVA IN 2022
+        </Typography>
+      </CardContent>
+
+      <CardActions>
+        <Button size="small">Share</Button>
+      </CardActions>
+    </Card>
+  );
 }

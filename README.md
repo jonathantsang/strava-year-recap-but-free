@@ -1,6 +1,9 @@
 # strava-year-recap-but-free
 
-This is against their API TOS
+This is against their API TOS:
+
+Check it out here:
+[https://strava-year-recap-but-free-x7xf.vercel.app/](https://strava-year-recap-but-free-x7xf.vercel.app/)
 
 Strava year in review has:
 - 2 useless panels
@@ -20,10 +23,11 @@ Strava year in review has:
 - ✔️ get Oauth website example
 - ✔️ output (basic) data on frontend
 - [ ] finish parsing/analytics to get the stats needed
-- [ ] make basic ui elements to mimic it
-- [ ] mock up page designs
+- ✔️ make basic ui elements to mimic it
+- ✔️ mock up page designs
 - [ ] find a way to screenshot the data and save as an image
-- [ ] figure out hosting and a domain
+- ✔️ figure out hosting
+- [ ] host on domain
 - [ ] cache results in a database so we don't do the call every time
 
 Resources:

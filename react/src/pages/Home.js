@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TotalsCard } from "./components/Components";
+import { TotalsCard, TotalDaysActiveCard } from "./components/Components";
 
 const { REACT_APP_CLIENT_ID } = process.env;
 const redirectUrl = "http://localhost:3000/redirect"
@@ -12,6 +12,10 @@ const handleLogin = () => {
 const Home = () => {
     return (
         <div>
+
+            <TotalDaysActiveCard top_percentage="1"/>
+
+            <br />
 
             <TotalsCard days_active="310"
                         total_elevation="99,475"

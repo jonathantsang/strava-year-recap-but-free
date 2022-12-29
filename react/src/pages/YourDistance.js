@@ -5,6 +5,9 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
     console.log(activities)
     return (
         <div>
+            <p>Want to hire me Strava?</p>
+            <p>Here is my <a href="https://jonathantsang.github.io/resume/">resume</a></p>
+
             <img src={athlete.data.profile_medium} alt="profile"/>
             <p>Athlete Id: {athlete.data.id}</p>
             <h1>Hi, {returnTokens.athlete.firstname}!</h1>

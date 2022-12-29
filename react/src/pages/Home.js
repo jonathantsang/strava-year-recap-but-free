@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TotalsCard, TotalDaysActiveCard } from "./components/Components";
+import { TotalsCard, TotalDaysActiveCard, TopPhotosCard, HireMe } from "./components/Components";
 
 const { REACT_APP_CLIENT_ID } = process.env;
 const redirectUrl = "http://localhost:3000/redirect"
@@ -12,6 +12,20 @@ const handleLogin = () => {
 const Home = () => {
     return (
         <div>
+
+            <HireMe />
+
+            <TopPhotosCard activity_one_date="Date 1"
+                           activity_one_title="Title 1"
+                           activity_one_src=""
+                           activity_two_date="Date 2"
+                           activity_two_title="Title 2"
+                           activity_two_src=""
+                           activity_three_date="Date 3"
+                           activity_three_title="Title 3"
+                           activity_three_src=""/>
+
+            <br />
 
             <TotalDaysActiveCard top_percentage="1"/>
 

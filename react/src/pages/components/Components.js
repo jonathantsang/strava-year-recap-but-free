@@ -110,26 +110,26 @@ export function TotalDaysActiveCard(props) {
         </Typography>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F2EC'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <br />
         <br />
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F2EC'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <LargeStyledAvatar height="200px" width="200px" bgcolor="#ff6600">
           <WorkspacePremiumIcon sx={{width: "5rem", height: "5rem"}}/>
         </LargeStyledAvatar>
         <br />
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F2EC'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography variant="h4" color="#ff6600">
           Top {props.top_percentage}%
         </Typography>
         <br />
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#F4F4DB'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F2EC'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography variant="h6" color="text.primary">
           MOST ACTIVE ON STRAVA IN 2022
         </Typography>
@@ -140,4 +140,76 @@ export function TotalDaysActiveCard(props) {
       </CardActions>
     </Card>
   );
+}
+
+export function TopPhotosCard(props) {
+  return (
+    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <CardContent header sx={{backgroundColor:'black'}}>
+        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
+          Strava Year in Review but Free
+        </Typography>
+        <hr />
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
+        <Typography gutterBottom variant="h5" component="div" margin="0px">
+          TOP PHOTOS
+        </Typography>
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#DDA946', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_one_date}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_one_title}
+          </Typography>
+        </CardContent>
+        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
+          <img src={props.activity_one_src} alt="strava activity 1"/>
+        </CardContent>
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#FEFFFE', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_two_date}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_two_title}
+          </Typography>
+        </CardContent>
+        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
+          <img src={props.activity_two_src} alt="strava activity 2"/>
+        </CardContent>
+      </CardContent>
+
+      <CardContent sx={{backgroundColor:'#ff6600', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_three_date}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {props.activity_three_title}
+          </Typography>
+        </CardContent>
+        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
+          <img src={props.activity_three_src} alt="strava activity 3"/>
+        </CardContent>
+      </CardContent>
+
+      <CardActions>
+        <Button size="small">Share</Button>
+      </CardActions>
+    </Card>
+  );
+}
+
+export function HireMe(props) {
+    return (
+        <p>Want to hire me Strava?</p>
+        <p>Here is my <a href="https://jonathantsang.github.io/resume/">resume</a></p>
+    );
 }

@@ -1,5 +1,42 @@
 import React from "react";
+import Card from '@mui/material/Card';
 import { connect } from "react-redux";
+
+import Box from '@mui/material/Box';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+
+function MediaCard(props) {
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        alt="stats"
+        height="140"
+        image={props.image}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {props.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {props.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
+  );
+}
+
+function TotalsCard(props) {
+    return (<MediaCard />);
+}
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
     console.log(activities)
@@ -10,6 +47,8 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <h1>Hi, {returnTokens.athlete.firstname}!</h1>
 
             <h1>Strava year in review but free</h1>
+
+            <TotalsCard name={returnTokens.athlete.firstname}/>
 
             <h1>Page 1 - Total days active in 2022</h1>
             <p>Total days active: {activities[2]}</p>
@@ -39,11 +78,11 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <h2>This is completely arbitrary and on different runs of Strava year in sport it gives different photos here</h2>
             <h2>That behaviour is replicated here:</h2>
 
-            <img src=""/>
+            <img src="" alt="strava embed"/>
 
-            <img src=""/>
+            <img src="" alt="strava embed"/>
 
-            <img src=""/>
+            <img src="" alt="strava embed"/>
 
             <h1>Page 6 - 2022 Totals</h1>
 

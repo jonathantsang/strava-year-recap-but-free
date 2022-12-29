@@ -54,27 +54,31 @@ function goThroughActivities(activities, current_year = 2022) {
     for (const activity of activities) {
         const date = new Date(activity["start_date_local"]);
 
-        // Increment dates with an activity
-        dates_map.set(date, dates_map.get(date) === undefined ? 1 : dates_map.get(date) + 1);
+        // Only count current year in "year in review"
+        if (date.getFullYear() === current_year) {
 
-        // Increment hour of day an activity was done
-        hours_map.set(date.getHours(), hours_map.get(date.getHours()) === undefined ? 1 : hours_map.get(date.getHours()) + 1);
+            // Increment dates with an activity
+            dates_map.set(date, dates_map.get(date) === undefined ? 1 : dates_map.get(date) + 1);
 
-        total_kudos += activity["kudos_count"];
+            // Increment hour of day an activity was done
+            hours_map.set(date.getHours(), hours_map.get(date.getHours()) === undefined ? 1 : hours_map.get(date.getHours()) + 1);
 
-        total_elevation += activity["total_elevation_gain"];
+            total_kudos += activity["kudos_count"];
 
-        total_distance += activity["distance"];
+            total_elevation += activity["total_elevation_gain"];
 
-        sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"] === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1));
+            total_distance += activity["distance"];
 
-        // Use enum values "MountainBikeRide" or "Ride" (no EBikes)
-        if (activity["sport_type"] === "MountainBikeRide" || activity["sport_type"] === "Ride") {
-            if (longest_ride == null || longest_ride.distance < activity.distance) {
-                longest_ride = activity;
-            }
-            if (biggest_climb_ride == null || biggest_climb_ride.total_elevation_gain < activity.total_elevation_gain) {
-                biggest_climb_ride = activity;
+            sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"] === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1));
+
+            // Use enum values "MountainBikeRide" or "Ride" (no EBikes)
+            if (activity["sport_type"] === "MountainBikeRide" || activity["sport_type"] === "Ride") {
+                if (longest_ride == null || longest_ride.distance < activity.distance) {
+                    longest_ride = activity;
+                }
+                if (biggest_climb_ride == null || biggest_climb_ride.total_elevation_gain < activity.total_elevation_gain) {
+                    biggest_climb_ride = activity;
+                }
             }
         }
     }

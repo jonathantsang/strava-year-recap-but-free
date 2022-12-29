@@ -1,4 +1,5 @@
 import React from "react";
+import CircularProgress from '@mui/material/CircularProgress';
 import _ from "lodash";
 import { connect } from "react-redux";
 
@@ -60,7 +61,10 @@ class StravaRedirect extends React.Component {
     }
 
     render() {
-        return <div>Loading...Please wait as it analyzes your Strava activities.</div>;
+        return <div>
+                <CircularProgress />
+                <p>Loading...Please wait as it analyzes your Strava activities.</p>
+                </div>;
     }
 }
 

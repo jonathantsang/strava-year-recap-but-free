@@ -10,7 +10,7 @@ const handleLogin = () => {
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Strava Year in Review but Free</h1>
             <button onClick={handleLogin}><img src="btn_strava_connectwith_orange@2x.png" alt="Connect with Strava"/></button>
         </div>
     );

@@ -31,7 +31,7 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                         first_name={returnTokens.athlete.firstname}
                         last_name= {returnTokens.athlete.lastname}
                         avatar_src={returnTokens.athlete.profile}
-                        top_sport_type={activities[5][1]}/>
+                        top_sport_type={activities[5]}/>
 
             <br />
 

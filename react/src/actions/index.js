@@ -89,6 +89,14 @@ function goThroughActivities(activities, photos, current_year = 2022) {
             highest_sport_type_count = [value, key]
         }
     })
+    highest_sport_type_count = highest_sport_type_count[0]
+    if (highest_sport_type_count === null) {
+        highest_sport_type_count = "None"
+    }
+    // Right now can't handle other types of "top sport"
+    if (highest_sport_type_count !== "Walk" && highest_sport_type_count !== "Ride" && highest_sport_type_count !== "MountainBikeRide" && highest_sport_type_count !== "GravelRide" && highest_sport_type_count !== "TrainRun") {
+        highest_sport_type_count = "None"
+    }
 
     const total_days_active = getTotalDaysActive(dates_map, current_year);
     const days_active_percentage = getTotalDaysActivePercentage(total_days_active);
@@ -115,7 +123,6 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
             year_days.add(key.getMonth() + '/' + key.getDate());
         }
     });
-    console.log(year_days);
     return year_days.size;
 }
 
@@ -164,6 +171,9 @@ export const setActivities = (data, page2 = [], page3 = [], page4 = [], photos =
     }
     if (page3 != null && page3.data.length > 0) {
         activities = activities.concat(page3.data)
+    }
+    if (page4 != null && page4.data.length > 0) {
+        activities = activities.concat(page4.data)
     }
 
     const current_year = 2022

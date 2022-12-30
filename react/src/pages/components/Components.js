@@ -54,7 +54,8 @@ export function TotalsCard(props) {
             {props.days_active}
           </Typography>
         </CardContent>
-        <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
+
+        {props.top_sport_type !== "None" && <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
           <Typography variant="body2" color="white">
             TOP SPORT
           </Typography>
@@ -76,7 +77,7 @@ export function TotalsCard(props) {
           {props.top_sport_type === "Run" &&
             <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
           }
-        </CardContent>
+        </CardContent> }
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#ff6600', color:'white', outline: "black 2px solid"}}>
@@ -181,6 +182,7 @@ export function TopPhotosCard(props) {
           <Typography variant="body2" color="text.secondary">
             {props.activity_one_date}
           </Typography>
+          <br/>
           <Typography variant="body2" color="text.secondary">
             {props.activity_one_title}
           </Typography>
@@ -195,10 +197,12 @@ export function TopPhotosCard(props) {
           <Typography variant="body2" color="text.secondary">
             {props.activity_two_date}
           </Typography>
+          <br/>
           <Typography variant="body2" color="text.secondary">
             {props.activity_two_title}
           </Typography>
         </CardContent>
+        <br/>
         <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
           <img src={props.activity_two_src !== undefined && props.activity_two_src} alt="strava activity 2" max-width="100%" max-height="100%" />
         </CardContent>
@@ -209,10 +213,12 @@ export function TopPhotosCard(props) {
           <Typography variant="body2" color="text.secondary">
             {props.activity_three_date}
           </Typography>
+          <br/>
           <Typography variant="body2" color="text.secondary">
             {props.activity_three_title}
           </Typography>
         </CardContent>
+        <br/>
         <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
           <img src={props.activity_three_src !== undefined && props.activity_three_src} alt="strava activity 3" max-width="100%" max-height="100%" />
         </CardContent>

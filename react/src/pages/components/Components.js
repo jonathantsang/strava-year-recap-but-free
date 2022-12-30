@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 // Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
 import DirectionsBike from '@mui/icons-material/DirectionsBike';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 const StyledAvatar = ({ children, ...props }) => (
@@ -57,7 +58,24 @@ export function TotalsCard(props) {
           <Typography variant="body2" color="white">
             TOP SPORT
           </Typography>
-          <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          {props.top_sport_type === "Walk" &&
+            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
+            }
+          {props.top_sport_type === "Ride" &&
+            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.top_sport_type === "MountainBikeRide" &&
+            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.top_sport_type === "GravelRide" &&
+            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.top_sport_type === "TrailRun" &&
+            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.top_sport_type === "Run" &&
+            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
+          }
         </CardContent>
       </CardContent>
 
@@ -144,7 +162,7 @@ export function TotalDaysActiveCard(props) {
 
 export function TopPhotosCard(props) {
   return (
-    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+    <Card sx={{ maxWidth: 400, maxHeight: 1000 }}>
       <CardContent header sx={{backgroundColor:'black'}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           Strava Year in Review but Free
@@ -158,7 +176,7 @@ export function TopPhotosCard(props) {
         </Typography>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#DDA946', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+      <CardContent sx={{backgroundColor:'#DDA946', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', outline: "black 2px solid" }}>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {props.activity_one_date}
@@ -167,12 +185,12 @@ export function TopPhotosCard(props) {
             {props.activity_one_title}
           </Typography>
         </CardContent>
-        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
-          <img src={props.activity_one_src} alt="strava activity 1"/>
+        <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
+          <img src={props.activity_one_src !== undefined && props.activity_one_src} alt="strava activity 1" max-width="100%" max-height="100%" />
         </CardContent>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#FEFFFE', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+      <CardContent sx={{backgroundColor:'#FEFFFE', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', outline: "black 2px solid" }}>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {props.activity_two_date}
@@ -181,12 +199,12 @@ export function TopPhotosCard(props) {
             {props.activity_two_title}
           </Typography>
         </CardContent>
-        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
-          <img src={props.activity_two_src} alt="strava activity 2"/>
+        <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
+          <img src={props.activity_two_src !== undefined && props.activity_two_src} alt="strava activity 2"/>
         </CardContent>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#ff6600', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', maxHeight: '200px', outline: "black 2px solid" }}>
+      <CardContent sx={{backgroundColor:'#ff6600', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px',outline: "black 2px solid" }}>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {props.activity_three_date}
@@ -195,8 +213,8 @@ export function TopPhotosCard(props) {
             {props.activity_three_title}
           </Typography>
         </CardContent>
-        <CardContent sx={{height:'100%', outline: "black 2px solid" }}>
-          <img src={props.activity_three_src} alt="strava activity 3"/>
+        <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
+          <img src={props.activity_three_src !== undefined && props.activity_three_src} alt="strava activity 3"/>
         </CardContent>
       </CardContent>
 

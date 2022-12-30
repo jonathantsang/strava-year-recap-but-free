@@ -77,11 +77,14 @@ export const getActivities = async (accessToken, per_page = 5, page = 1) => {
     }
 };
 
-export const getPhotos = async (accessToken, activities) => {
+// This gets the photos from the DETAILED activity from a separate api call
+// this probably leaks async threads since we exit early but it is better that than
+// trying to get EVERY activity with a photo
+export const getPhotos = async (accessToken, activities, numPhotos = 3) => {
     const urls = []
     for(var i = 0; i < activities.data.length; i++) {
         // Only need 3 photos
-        if (urls.length >= 3) {
+        if (urls.length >= numPhotos) {
             break;
         } else {
             const activity = activities.data[i];
@@ -91,11 +94,8 @@ export const getPhotos = async (accessToken, activities) => {
                 var detailed_activity = await getDetailedActivity(accessToken, activity["id"], urls);
                 detailed_activity = detailed_activity.data;
                 urls.push([detailed_activity["name"], date.toDateString(), detailed_activity["photos"]["primary"]["urls"][600]]);
-                console.log(urls);
             }
         }
     }
-    console.log("END", urls)
     return urls;
-
 }

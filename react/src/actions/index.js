@@ -36,7 +36,6 @@ export const setAthlete = (data) => {
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
 // hours_map: key: int object for hour (1-23) -> number of activities with that hour
 function goThroughActivities(activities, photos, current_year = 2022) {
-    console.log("PHOTOS URLS?", photos);
     const dates_map = new Map();
     const hours_map = new Map();
     const sport_type_map = new Map();
@@ -84,18 +83,27 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         }
     }
 
-    const days_active = getTotalDaysActive(dates_map, current_year);
+    var highest_sport_type_count = [null,0];
+    sport_type_map.forEach (function(value, key) {
+        if (value > highest_sport_type_count[1]) {
+            highest_sport_type_count = [value, key]
+        }
+    })
+
+    const total_days_active = getTotalDaysActive(dates_map, current_year);
+    const days_active_percentage = getTotalDaysActivePercentage(total_days_active);
 
     return [
         dates_map,
-        days_active,
+        total_days_active,
         total_kudos,
         metreToMiles(total_distance),
         metreToFeet(total_elevation),
-        sport_type_map,
+        highest_sport_type_count,
         longest_ride === null ? longest_ride : [longest_ride.name, new Date(longest_ride.start_date).toDateString(), metreToMiles(longest_ride.distance)], // may be null if no rides
         biggest_climb_ride === null ? biggest_climb_ride : [biggest_climb_ride.name, new Date(longest_ride.start_date).toDateString(), metreToFeet(biggest_climb_ride.total_elevation_gain)],  // may be null if no rides
-        activities_with_photos_ids
+        activities_with_photos_ids,
+        days_active_percentage
     ];
 }
 
@@ -114,11 +122,37 @@ function getTotalDaysActive(dates_map, current_year = 2022) {
 function getTotalDaysActivePercentage(total_days_active) {
     // Interpolation of a regular distribution and trying to extrapolate with real data but
     // also holding other stuff constant
-    var percentage = null
 
     // 309 is 1% (me)
 
-    return percentage;
+    // For testing we are PURELY going to guess
+    // Ideally we do some distribution curve but we are short on time
+    // 365-309 is 1%
+    // 309-290 is 2%
+    // 290-280 is 3%
+    // 280-270 is 4%
+    // 270-260 is 5%
+    // 260-200 is 10%
+    // 200-100 is 50%
+    // rest is top 100% lmao
+
+    if (total_days_active >= 309) {
+        return 1;
+    } else if (total_days_active >= 290) {
+        return 2;
+    } else if (total_days_active >= 280) {
+        return 3;
+    } else if (total_days_active >= 270) {
+        return 4;
+    } else if (total_days_active >= 260) {
+        return 5;
+    } else if (total_days_active >= 200) {
+        return 10;
+    } else if (total_days_active >= 100) {
+        return 50;
+    } else {
+        return 100;
+    }
 }
 
 export const setActivities = (data, page2 = [], page3 = [], page4 = [], photos = [], accessToken) => {

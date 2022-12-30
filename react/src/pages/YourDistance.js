@@ -1,14 +1,42 @@
 import React from "react";
 import { connect } from "react-redux";
+import { TotalsCard, TotalDaysActiveCard, TopPhotosCard, HireMe } from "./components/Components";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
     console.log(activities);
     // console.log(returnTokens); accessToken
     return (
         <div>
-            <p>Want to hire me Strava?</p>
-            <p>Here is my <a href="https://jonathantsang.github.io/resume/">resume</a></p>
+            <HireMe />
 
+            <TopPhotosCard activity_one_date={activities[8].length > 0 && activities[8][0][1]}
+                           activity_one_title={activities[8].length > 0 && activities[8][0][0]}
+                           activity_one_src={activities[8].length > 0 && activities[8][0][2]}
+                           activity_two_date={activities[8].length > 1 && activities[8][1][1]}
+                           activity_two_title={activities[8].length > 1 && activities[8][1][0]}
+                           activity_two_src={activities[8].length > 1 && activities[8][1][2]}
+                           activity_three_date={activities[8].length > 2 && activities[8][2][1]}
+                           activity_three_title={activities[8].length > 2 && activities[8][2][0]}
+                           activity_three_src={activities[8].length > 2 && activities[8][2][2]} />
+
+            <br />
+
+            <TotalDaysActiveCard top_percentage={activities[9]}/>
+
+            <br />
+
+            <TotalsCard days_active={activities[2]}
+                        total_elevation={activities[4]}
+                        total_distance={activities[3]}
+                        first_name={returnTokens.athlete.firstname}
+                        last_name= {returnTokens.athlete.lastname}
+                        avatar_src={returnTokens.athlete.profile}
+                        top_sport_type={activities[5][1]}/>
+
+            <br />
+
+
+            <h1>Some Raw Data</h1>
             <img src={athlete.data.profile_medium} alt="profile"/>
             <p>Athlete Id: {athlete.data.id}</p>
             <h1>Hi, {returnTokens.athlete.firstname}!</h1>
@@ -65,8 +93,6 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             }
 
             <h1>Page 6 - 2022 Totals</h1>
-
-            <h1>Custom data</h1>
 
             <button type="button">
                 Download as Image

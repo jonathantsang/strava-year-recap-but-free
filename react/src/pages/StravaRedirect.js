@@ -37,7 +37,7 @@ class StravaRedirect extends React.Component {
                 const athlete = await getAthlete(accessToken);
 
                 // testing
-                const pagination_amount = 5;
+                const pagination_amount = 100;
 
                 // User might have more than 200 activities in a year
                 // Paginate a max of 800 activities

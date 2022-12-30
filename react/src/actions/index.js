@@ -95,7 +95,7 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         highest_sport_type_count = "None"
     }
     // Right now can't handle other types of "top sport"
-    if (highest_sport_type_count !== "Walk" && highest_sport_type_count !== "Ride" && highest_sport_type_count !== "MountainBikeRide" && highest_sport_type_count !== "GravelRide" && highest_sport_type_count !== "TrainRun") {
+    if (highest_sport_type_count !== "Run" && highest_sport_type_count !== "Walk" && highest_sport_type_count !== "Ride" && highest_sport_type_count !== "MountainBikeRide" && highest_sport_type_count !== "GravelRide" && highest_sport_type_count !== "TrainRun") {
         highest_sport_type_count = "None"
     }
 

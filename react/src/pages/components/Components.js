@@ -84,7 +84,7 @@ export function TotalsCard(props) {
           ELEVATION
         </Typography>
         <Typography gutterBottom variant="h3" component="div" sx={{"margin-bottom": "0px"}}>
-          {props.total_elevation}
+          {props.total_elevation.toLocaleString()}
         </Typography>
         <Typography variant="body2">
           FEET
@@ -96,7 +96,7 @@ export function TotalsCard(props) {
           DISTANCE
         </Typography>
         <Typography gutterBottom variant="h3" component="div" sx={{"margin-bottom": "0px"}}>
-          {props.total_distance}
+          {props.total_distance.toLocaleString()}
         </Typography>
         <Typography variant="body2">
           MILES

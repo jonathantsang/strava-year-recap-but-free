@@ -58,7 +58,9 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         if (date.getFullYear() === current_year) {
 
             // Increment dates with an activity
-            dates_map.set(date, dates_map.get(date) === undefined ? 1 : dates_map.get(date) + 1);
+            // use key as day + month
+            const date_key = date.getDate() + '/'+ date.getDay()
+            dates_map.set(date, dates_map.get(date_key) === undefined ? 1 : dates_map.get(date_key) + 1);
 
             // Increment hour of day an activity was done
             hours_map.set(date.getHours(), hours_map.get(date.getHours()) === undefined ? 1 : hours_map.get(date.getHours()) + 1);

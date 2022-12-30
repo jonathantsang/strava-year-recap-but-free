@@ -25,7 +25,7 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
 
             <br />
 
-            <TotalsCard days_active={activities[2]}
+            <TotalsCard days_active={activities[1]}
                         total_elevation={activities[4]}
                         total_distance={activities[3]}
                         first_name={returnTokens.athlete.firstname}
@@ -52,19 +52,19 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <h1>Page 2 - Fastest and longest activity</h1>
 
             <h2>Longest ride distance ride:</h2>
-            <p>{activities[6][0]} going {activities[6][2]} miles on {activities[6][1]}</p>
+            <p>{activities[6][0]} going {activities[6][2].toLocaleString()} miles on {activities[6][1]}</p>
 
             <h2>Biggest climb elevation gain:</h2>
-            <p>{activities[7][0]} climbing {activities[7][2]} feet on {activities[7][1]}</p>
+            <p>{activities[7][0]} climbing {activities[7][2].toLocaleString()} feet on {activities[7][1]}</p>
 
             <h1>Page 3 - Kudos, Local legend and segment effort records</h1>
 
-            <p>You got {activities[3]} kudos on your activities in 2022</p>
+            <p>You got {activities[3].toLocaleString()} kudos on your activities in 2022</p>
             <p>Finding how many kudos you gave out is impossible from Strava's current API</p>
 
             <h1>Page 4 - Total elevation and total distance</h1>
-            <p>You went a total elevation of {activities[4]} miles</p>
-            <p>You went a total distance of {activities[3]} miles</p>
+            <p>You went a total elevation of {activities[4].toLocaleString()} miles</p>
+            <p>You went a total distance of {activities[3].toLocaleString()} miles</p>
 
             <h1>Page 5 - Top photos</h1>
 
@@ -88,7 +88,7 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             {activities[8].length > 2 &&
                 <div>
                     <p>{activities[8][2][0]} on {activities[8][2][1]}</p>
-                    <img src={activities[8][0][2]} alt="strava embed"/>
+                    <img src={activities[8][2][2]} alt="strava embed"/>
                 </div>
             }
 

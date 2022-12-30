@@ -200,11 +200,11 @@ export function TopPhotosCard(props) {
           </Typography>
         </CardContent>
         <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
-          <img src={props.activity_two_src !== undefined && props.activity_two_src} alt="strava activity 2"/>
+          <img src={props.activity_two_src !== undefined && props.activity_two_src} alt="strava activity 2" max-width="100%" max-height="100%" />
         </CardContent>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#ff6600', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px',outline: "black 2px solid" }}>
+      <CardContent sx={{backgroundColor:'#ff6600', display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0px', outline: "black 2px solid" }}>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {props.activity_three_date}
@@ -214,7 +214,7 @@ export function TopPhotosCard(props) {
           </Typography>
         </CardContent>
         <CardContent sx={{outline: "black 2px solid", margin: "0px", display: "flex", width:"250px", height: "250px"}}>
-          <img src={props.activity_three_src !== undefined && props.activity_three_src} alt="strava activity 3"/>
+          <img src={props.activity_three_src !== undefined && props.activity_three_src} alt="strava activity 3" max-width="100%" max-height="100%" />
         </CardContent>
       </CardContent>
 

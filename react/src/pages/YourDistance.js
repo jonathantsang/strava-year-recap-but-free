@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { TotalsCard, TotalDaysActiveCard, TopPhotosCard, HireMe } from "./components/Components";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
-    // console.log(activities);
+    console.log(activities);
     // console.log(returnTokens); accessToken
     return (
         <div>

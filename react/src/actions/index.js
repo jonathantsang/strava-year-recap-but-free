@@ -83,10 +83,11 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         }
     }
 
+    // SportType, amount
     var highest_sport_type_count = [null,0];
     sport_type_map.forEach (function(value, key) {
         if (value > highest_sport_type_count[1]) {
-            highest_sport_type_count = [value, key]
+            highest_sport_type_count = [key, value]
         }
     })
     highest_sport_type_count = highest_sport_type_count[0]

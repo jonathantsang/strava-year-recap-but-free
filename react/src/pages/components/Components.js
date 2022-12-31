@@ -235,7 +235,7 @@ export function HireMe(props) {
     return (
         <div>
           <p>Want to hire me Strava?</p>
-          <p>Here is my <a href="https://jonathantsang.github.io/resume/">resume</a></p>
+          <p>Here is my <a href="https://www.linkedin.com/in/jonathan-tsang/">LinkedIn</a></p>
         </div>
     );
 }

@@ -22,7 +22,7 @@ Strava year in review has:
 ## Todo
 - ✔️ get Oauth website example
 - ✔️ output (basic) data on frontend
-- [ ] finish parsing/analytics to get the stats needed
+- ✔️ finish parsing/analytics to get the stats needed
 - ✔️ make basic ui elements to mimic it
 - ✔️ mock up page designs
 - [ ] find a way to screenshot the data and save as an image

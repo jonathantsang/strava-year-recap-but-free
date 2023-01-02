@@ -138,7 +138,7 @@ function getArchetypeData(highest_sports_type_counts, total_year_activities, ath
         athlete_count_text = "you do a lot of your activities in a group!";
         athlete_count_title_text = "Group";
     } else {
-        athlete_count_text = "most of the time your like doing activities on your own.";
+        athlete_count_text = "most of the time you like doing activities on your own.";
         athlete_count_title_text = "Solo";
     }
 

@@ -362,11 +362,11 @@ function getTopActivityTimeOfDay(hours_map) {
     let night = 0;
     hours_map.forEach (function(value, key) {
         if (key <= 12) {
-            morning += 1
+            morning += value
         } else if (key <= 18) {
-            evening += 1;
+            evening += value;
         } else {
-            night += 1;
+            night += value;
         }
     });
 

@@ -1,13 +1,52 @@
 import React from "react";
 import { connect } from "react-redux";
-import { TotalsCard, TotalDaysActiveCard, TopPhotosCard, HireMe } from "./components/Components";
+import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard, HireMe } from "./components/Components";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
     // console.log(activities);
-    // console.log(returnTokens); accessToken
+    // console.log(returnTokens); // accessToken
     return (
         <div>
             <HireMe />
+
+            <br />
+
+            <TopPercentCard top_percentage={activities[9]}/>
+
+            <br />
+
+            <TotalsCard days_active={activities[1]}
+                        total_elevation={activities[4]}
+                        total_distance={activities[3]}
+                        first_name={returnTokens.athlete.firstname}
+                        last_name= {returnTokens.athlete.lastname}
+                        avatar_src={returnTokens.athlete.profile}
+                        top_sport_type={activities[5][0][1]}/>
+
+            <br />
+
+            <TotalDaysActiveCard days_active={activities[1]}
+                                 top_sport_types={activities[5]}
+                                 jan={activities[10].get(0)}
+                                 feb={activities[10].get(1)}
+                                 mar={activities[10].get(2)}
+                                 apr={activities[10].get(3)}
+                                 may={activities[10].get(4)}
+                                 jun={activities[10].get(5)}
+                                 jul={activities[10].get(6)}
+                                 aug={activities[10].get(7)}
+                                 sep={activities[10].get(8)}
+                                 oct={activities[10].get(9)}
+                                 nov={activities[10].get(10)}
+                                 dec={activities[10].get(11)}/>
+
+            <br />
+
+            <AchievementsCard kudos_received={activities[2].toLocaleString()}
+                              local_legends="N/A"
+                              personal_records="N/A" />
+
+            <br />
 
             <TopPhotosCard activity_one_date={activities[8].length > 0 && activities[8][0][1]}
                            activity_one_title={activities[8].length > 0 && activities[8][0][0]}
@@ -21,33 +60,15 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
 
             <br />
 
-            <TotalDaysActiveCard top_percentage={activities[9]}/>
-
-            <br />
-
-            <TotalsCard days_active={activities[1]}
-                        total_elevation={activities[4]}
-                        total_distance={activities[3]}
-                        first_name={returnTokens.athlete.firstname}
-                        last_name= {returnTokens.athlete.lastname}
-                        avatar_src={returnTokens.athlete.profile}
-                        top_sport_type={activities[5]}/>
-
-            <br />
-
-
-            <h1>Some Raw Data</h1>
+            <h1>Your raw Strava data</h1>
             <img src={athlete.data.profile_medium} alt="profile"/>
             <p>Athlete Id: {athlete.data.id}</p>
             <h1>Hi, {returnTokens.athlete.firstname}!</h1>
 
-            <h1>Strava year in review but free</h1>
+            <h1>Strava year in review but free - text version</h1>
 
             <h1>Page 1 - Total days active in 2022</h1>
             <p>Total days active: {activities[2]}</p>
-            <p>Total run distance: {user.data.ytd_run_totals.distance} miles</p>
-            <p>Total ride distance: {user.data.ytd_ride_totals.distance} miles</p>
-            <p>Total swim distance: {user.data.ytd_swim_totals.distance} miles</p>
 
             <h1>Page 2 - Fastest and longest activity</h1>
 
@@ -59,7 +80,11 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
 
             <h1>Page 3 - Kudos, Local legend and segment effort records</h1>
 
-            <p>You got {activities[3].toLocaleString()} kudos on your activities in 2022</p>
+            <p>Local legend and segment efforts are not available to non-subscribers in the Strava API :(</p>
+            <p>Even for subscribers checking segment efforts on activities is tedious and frankly not worth it in my opinion.</p>
+            <p>Coupled with the fact that a PR may be set on a segment on multiple different activities.</p>
+
+            <p>You got {activities[2].toLocaleString()} kudos on your activities in 2022</p>
             <p>Finding how many kudos you gave out is impossible from Strava's current API</p>
 
             <h1>Page 4 - Total elevation and total distance</h1>
@@ -93,6 +118,11 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             }
 
             <h1>Page 6 - 2022 Totals</h1>
+
+            <p>Total days active: {activities[2]}</p>
+            <p>You went a total elevation of {activities[4].toLocaleString()} miles</p>
+            <p>You went a total distance of {activities[3].toLocaleString()} miles</p>
+            <p>Your top sport was {activities[5][0][1]}</p>
 
             <button type="button">
                 Download as Image

@@ -48,8 +48,8 @@ class StravaRedirect extends React.Component {
                 const page3 = await getActivities(accessToken, pagination_amount, 3);
                 const page4 = await getActivities(accessToken, pagination_amount, 4);
 
-                // Maybe change numPhotos > 3?
-                const photos = await getPhotos(accessToken, activities, 3);
+                // Maybe change numPhotos > 3? and current year = 2022
+                const photos = await getPhotos(accessToken, activities, 3, 2022);
 
                 this.props.setUserActivities(user);
                 this.props.setAthlete(athlete);

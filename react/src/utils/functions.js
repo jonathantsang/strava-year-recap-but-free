@@ -80,17 +80,17 @@ export const getActivities = async (accessToken, per_page = 5, page = 1) => {
 // This gets the photos from the DETAILED activity from a separate api call
 // this probably leaks async threads since we exit early but it is better that than
 // trying to get EVERY activity with a photo
-export const getPhotos = async (accessToken, activities, numPhotos = 3) => {
+export const getPhotos = async (accessToken, activities, num_photos = 3, current_year = 2022) => {
     const urls = []
     for(var i = 0; i < activities.data.length; i++) {
         // Only need 3 photos
-        if (urls.length >= numPhotos) {
+        if (urls.length >= num_photos) {
             break;
         } else {
             const activity = activities.data[i];
             const date = new Date(activity["start_date_local"]);
             // Find true strava photos
-            if (activity["total_photo_count"] - activity["photo_count"]) {
+            if (activity["total_photo_count"] - activity["photo_count"] && date.getFullYear() === current_year) {
                 var detailed_activity = await getDetailedActivity(accessToken, activity["id"], urls);
                 detailed_activity = detailed_activity.data;
                 urls.push([detailed_activity["name"], date.toDateString(), detailed_activity["photos"]["primary"]["urls"][600]]);

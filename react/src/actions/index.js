@@ -32,12 +32,32 @@ export const setAthlete = (data) => {
   }
 }
 
+function getHighestSportTypeCounts(sport_type_map) {
+    // Get top 3
+    var highest_sport_type_counts = []; // [amount, sport_type]
+
+    sport_type_map.forEach (function(value, key) {
+        highest_sport_type_counts.push([value, key]);
+
+        // sort each iteration
+        // this is less efficient but based on fixed number of sport_type and it being length == 3 at max
+        // I think it is fine for now
+        // want max value at the front
+        highest_sport_type_counts.sort(function(a, b){return b[0] - a[0]});
+        if (highest_sport_type_counts.length >= 4) {
+            highest_sport_type_counts.pop();
+        }
+    });
+    return highest_sport_type_counts;
+}
+
 // Goes through the activities for analyzing data
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
 // hours_map: key: int object for hour (1-23) -> number of activities with that hour
 function goThroughActivities(activities, photos, current_year = 2022) {
     const dates_map = new Map();
     const hours_map = new Map();
+    const month_map = new Map();
     const sport_type_map = new Map();
     var total_kudos = 0; // calculates total kudos received
     var total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
@@ -45,6 +65,9 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     // Store the longest/largest elevation ride here
     var longest_ride = null;
     var biggest_climb_ride = null;
+    // Not sure about PRs and achievements overlapping
+    var pr_count = 0;
+    var achievement_count = 0;
 
     // Top kudos activity for photos
     // Want top 3, but for now we get 3 most recent with photos
@@ -55,19 +78,26 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         const date = new Date(activity["start_date_local"]);
 
         // Only count current year in "year in review"
-        if (date.getFullYear() === current_year) {
+        if (date.getUTCFullYear() === current_year) {
 
             // Increment dates with an activity
             dates_map.set(date, dates_map.get(date) === undefined ? 1 : dates_map.get(date) + 1);
 
+            // Increment month with an activity
+            month_map.set(date.getUTCMonth(), month_map.get(date.getUTCMonth()) === undefined ? 1 : month_map.get(date.getUTCMonth()) + 1);
+
             // Increment hour of day an activity was done
-            hours_map.set(date.getHours(), hours_map.get(date.getHours()) === undefined ? 1 : hours_map.get(date.getHours()) + 1);
+            hours_map.set(date.getUTCHours(), hours_map.get(date.getUTCHours()) === undefined ? 1 : hours_map.get(date.getUTCHours()) + 1);
 
             total_kudos += activity["kudos_count"];
 
             total_elevation += activity["total_elevation_gain"];
 
             total_distance += activity["distance"];
+
+            pr_count += activity["pr_count"];
+
+            achievement_count += activity["achievement_count"];
 
             sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"]) === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1);
 
@@ -84,20 +114,33 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     }
 
     // SportType, amount
-    var highest_sport_type_count = [null,0];
-    sport_type_map.forEach (function(value, key) {
-        if (value > highest_sport_type_count[1]) {
-            highest_sport_type_count = [key, value]
+    const highest_sport_type_counts = getHighestSportTypeCounts(sport_type_map);
+
+    // Make it easier and divide each month to get percentage for each month
+    month_map.forEach (function(value, key) {
+        // I hate this logic of how many days are in a month
+        if (key <= 6) {
+            if (key === 1) { // February
+                // leap year?
+                if (current_year % 4 === 0) {
+                    value /= 29;
+                } else {
+                    value /= 28;
+                }
+            } else if (key % 2 === 1) { // April, May, July etc.
+                value /= 30;
+            } else {
+                value /= 31;
+            }
+        } else {
+            if (key % 2 === 1) { // August, October, December, etc.
+                value /= 31;
+            } else {
+                value /= 30;
+            }
         }
-    })
-    highest_sport_type_count = highest_sport_type_count[0]
-    if (highest_sport_type_count === null) {
-        highest_sport_type_count = "None"
-    }
-    // Right now can't handle other types of "top sport"
-    if (highest_sport_type_count !== "Run" && highest_sport_type_count !== "Walk" && highest_sport_type_count !== "Ride" && highest_sport_type_count !== "MountainBikeRide" && highest_sport_type_count !== "GravelRide" && highest_sport_type_count !== "TrainRun") {
-        highest_sport_type_count = "None"
-    }
+        // month_map.set(key, value);
+    });
 
     const total_days_active = getTotalDaysActive(dates_map, current_year);
     const days_active_percentage = getTotalDaysActivePercentage(total_days_active);
@@ -108,11 +151,14 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         total_kudos,
         metreToMiles(total_distance),
         metreToFeet(total_elevation),
-        highest_sport_type_count,
+        highest_sport_type_counts,
         longest_ride === null ? longest_ride : [longest_ride.name, new Date(longest_ride.start_date).toDateString(), metreToMiles(longest_ride.distance)], // may be null if no rides
         biggest_climb_ride === null ? biggest_climb_ride : [biggest_climb_ride.name, new Date(longest_ride.start_date).toDateString(), metreToFeet(biggest_climb_ride.total_elevation_gain)],  // may be null if no rides
         activities_with_photos_ids,
-        days_active_percentage
+        days_active_percentage,
+        month_map,
+        pr_count,
+        achievement_count
     ];
 }
 
@@ -120,8 +166,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
 function getTotalDaysActive(dates_map, current_year = 2022) {
     const year_days = new Set();
     dates_map.forEach (function(value, key) {
-        if (key.getFullYear() === current_year) {
-            year_days.add(key.getMonth() + '/' + key.getDate());
+        if (key.getUTCFullYear() === current_year) {
+            year_days.add(key.getUTCMonth() + '/' + key.getUTCDate());
         }
     });
     return year_days.size;

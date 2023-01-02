@@ -28,6 +28,9 @@ Strava year in review has:
 - [ ] find a way to screenshot the data and save as an image
 - ✔️ figure out hosting
 - [ ] host on domain
+- [ ] create a ui promoting the site
+
+## Nice to have
 - [ ] figure out react-scripts using openssl deprecated version and can't deploy to prod
 - [ ] cache results in a database so we don't do the call every time
 

@@ -97,7 +97,7 @@ function getHighestSportTypeCounts(sport_type_map) {
     let highest_sport_type_counts = []; // [amount, sport_type]
 
     sport_type_map.forEach (function(value, key) {
-        highest_sport_type_counts.push([value, key]);
+        highest_sport_type_counts.push([value.size, key]);
 
         // sort each iteration
         // this is less efficient but based on fixed number of sport_type and it being length == 3 at max
@@ -126,6 +126,9 @@ function getArchetypeData(highest_sports_type_counts, total_year_activities, ath
     let athlete_count_title_text = "";
     let time_of_day_title_text = ""
     let athlete_type_title_text = "Athlete";
+
+    // TODO: Recalculate this based on activity + time of day versus just time of day
+    // otherwise go back to old "wrong" calculation
 
     // See percentage of activities different by 0.15
     if (Math.abs(highest_sports_type_counts[0][0] / total_year_activities - highest_sports_type_counts[1][0] / total_year_activities) > 0.15) {
@@ -181,7 +184,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     const dates_map = new Map();
     const hours_map = new Map();
     const month_map = new Map();
-    const sport_type_map = new Map();
+    const sport_type_map = new Map(); // each has a set with times for calculating archetype
+
     let total_kudos = 0; // calculates total kudos received
     let total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
     let total_distance = 0; // total distance from activities (all sportTypes)
@@ -236,7 +240,11 @@ function goThroughActivities(activities, photos, current_year = 2022) {
 
             achievement_count += activity["achievement_count"];
 
-            sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"]) === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1);
+            // sport_type_map.set(activity["sport_type"], sport_type_map.get(activity["sport_type"]) === undefined ? 1 : sport_type_map.get(activity["sport_type"]) + 1);
+            if (sport_type_map.has(activity["sport_type"]) === false) {
+                sport_type_map.set(activity["sport_type"], new Set());
+            }
+            sport_type_map.get(activity["sport_type"]).add(date);
 
             // Use enum values "MountainBikeRide" or "Ride" (no EBikes)
             if (activity["sport_type"] === "MountainBikeRide" || activity["sport_type"] === "Ride") {
@@ -257,7 +265,7 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     const top_activity_time_of_day = getTopActivityTimeOfDay(hours_map);
 
     // archetype
-    const archetype_data = getArchetypeData(highest_sport_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
+    const archetype_data = getArchetypeData(sport_type_map, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
     const archetype_colour = stringToColour(archetype_data[1]);
 
     // Make it easier and divide each month to get percentage for each month

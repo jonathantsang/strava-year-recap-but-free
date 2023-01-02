@@ -303,7 +303,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         top_activity_time_of_day,
         total_year_activities,
         archetype_data,
-        archetype_colour
+        archetype_colour,
+        current_year
     ];
 }
 

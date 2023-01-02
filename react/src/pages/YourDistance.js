@@ -21,11 +21,13 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  strava_archetype={activities[15][0]}
                                  strava_archetype_description={activities[15][1]}
                                  strava_archetype_colour={activities[16]}
+                                 current_year = {activities[17]}
                                  />
 
             <br />
 
-            <TopPercentCard top_percentage={activities[9]}/>
+            <TopPercentCard top_percentage={activities[9]}
+                            current_year = {activities[17]}/>
 
             <br />
 
@@ -35,7 +37,8 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                         first_name={returnTokens.athlete.firstname}
                         last_name= {returnTokens.athlete.lastname}
                         avatar_src={returnTokens.athlete.profile}
-                        top_sport_type={activities[5][0][1]}/>
+                        top_sport_type={activities[5][0][1]}
+                        current_year = {activities[17]}/>
 
             <br />
 
@@ -52,13 +55,15 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  sep={activities[10].get(8)}
                                  oct={activities[10].get(9)}
                                  nov={activities[10].get(10)}
-                                 dec={activities[10].get(11)}/>
+                                 dec={activities[10].get(11)}
+                                 current_year = {activities[17]}/>
 
             <br />
 
             <AchievementsCard kudos_received={activities[2].toLocaleString()}
                               local_legends="N/A"
-                              personal_records="N/A" />
+                              personal_records="N/A"
+                              current_year = {activities[17]} />
 
             <br />
 
@@ -70,11 +75,12 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                            activity_two_src={activities[8].length > 1 && activities[8][1][2]}
                            activity_three_date={activities[8].length > 2 && activities[8][2][1]}
                            activity_three_title={activities[8].length > 2 && activities[8][2][0]}
-                           activity_three_src={activities[8].length > 2 && activities[8][2][2]} />
+                           activity_three_src={activities[8].length > 2 && activities[8][2][2]}
+                           current_year = {activities[17]}/>
 
             <br />
 
-            <h1>Your raw Strava data</h1>
+            <h1>Your raw Strava data for {activities[17]}</h1>
             <img src={athlete.data.profile_medium} alt="profile"/>
             <p>Athlete Id: {athlete.data.id}</p>
             <h1>Hi, {returnTokens.athlete.firstname}!</h1>

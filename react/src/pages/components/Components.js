@@ -93,7 +93,7 @@ export function TotalsCard(props) {
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
-          2022 TOTALS
+          {props.current_year} TOTALS
         </Typography>
       </CardContent>
 
@@ -199,7 +199,7 @@ export function TopPercentCard(props) {
 
       <CardContent sx={{backgroundColor:'#F2F2EC'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography variant="h6" color="text.primary">
-          MOST ACTIVE ON STRAVA IN 2022
+          MOST ACTIVE ON STRAVA IN {props.current_year}
         </Typography>
       </CardContent>
 
@@ -427,7 +427,7 @@ export function TotalDaysActiveCard(props) {
 
       {props.top_sport_types && <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h6" component="div" margin="0px">
-          MY TOP SPORTS 2022
+          MY TOP SPORTS {props.current_year}
         </Typography>
         <Typography gutterBottom variant="h6" component="div" margin="0px">
           {props.top_sport_types.length > 0 && props.top_sport_types[0][1]}, {props.top_sport_types.length > 1 && props.top_sport_types[1][1]}, {props.top_sport_types.length > 2 && props.top_sport_types[2][1]}

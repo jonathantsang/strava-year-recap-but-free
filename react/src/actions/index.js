@@ -225,7 +225,10 @@ function goThroughActivities(activities, photos, current_year = 2022) {
             }
 
 
-            total_elevation += activity["total_elevation_gain"];
+            // Do not count ski?
+            if (actvity["sport_type"].includes("Ski") === false) {
+                total_elevation += activity["total_elevation_gain"];
+            }
 
             total_distance += activity["distance"];
 

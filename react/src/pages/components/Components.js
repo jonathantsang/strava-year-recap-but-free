@@ -39,6 +39,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     </Box>
   );
 }
+
 function LinearProgressWithDoubleLabel(props: LinearProgressProps & { value: number }) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -50,6 +51,19 @@ function LinearProgressWithDoubleLabel(props: LinearProgressProps & { value: num
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" color="#A8B15E">{props.back}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+function LinearProgressWithFixedLabel(props: LinearProgressProps & { value: number }) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: 75 }}>
+        <Typography variant="body2" color="#A8B15E">{props.front}</Typography>
+      </Box>
+      <Box sx={{ width: '80%', mr: 1, ml: 1, colorPrimary: "#1a90ff" }}>
+        <BorderLinearProgress variant="determinate" {...props} />
       </Box>
     </Box>
   );
@@ -465,11 +479,11 @@ export function StravaArchetypeCard(props) {
 
       <CardContent sx={{backgroundColor:'#062E4F', color: "white",}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
-          MY STATS
+          MY TOP SPORTS
         </Typography>
-        <LinearProgressWithDoubleLabel variant="determinate" value={props.time_of_day} front="TOP%" back=""/>
-        <LinearProgressWithDoubleLabel variant="determinate" value={props.time_of_day} front="AM" back="PM"/>
-        <LinearProgressWithDoubleLabel variant="determinate" value={props.time_of_day} front="KUDOS" back=""/>
+        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_one} front={props.sport_one_name} back=""/>
+        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_two} front={props.sport_two_name} back=""/>
+        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_three} front={props.sport_three_name} back=""/>
       </CardContent>
     </Card>
   );

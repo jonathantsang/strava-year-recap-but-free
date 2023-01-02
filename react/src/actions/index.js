@@ -34,7 +34,7 @@ export const setAthlete = (data) => {
 
 function getHighestSportTypeCounts(sport_type_map) {
     // Get top 3
-    var highest_sport_type_counts = []; // [amount, sport_type]
+    let highest_sport_type_counts = []; // [amount, sport_type]
 
     sport_type_map.forEach (function(value, key) {
         highest_sport_type_counts.push([value, key]);
@@ -59,15 +59,16 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     const hours_map = new Map();
     const month_map = new Map();
     const sport_type_map = new Map();
-    var total_kudos = 0; // calculates total kudos received
-    var total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
-    var total_distance = 0; // total distance from activities (all sportTypes)
+    let total_kudos = 0; // calculates total kudos received
+    let total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
+    let total_distance = 0; // total distance from activities (all sportTypes)
     // Store the longest/largest elevation ride here
-    var longest_ride = null;
-    var biggest_climb_ride = null;
+    let longest_ride = null;
+    let biggest_climb_ride = null;
+    let total_year_activities = 0;
     // Not sure about PRs and achievements overlapping
-    var pr_count = 0;
-    var achievement_count = 0;
+    let pr_count = 0;
+    let achievement_count = 0;
 
     // Top kudos activity for photos
     // Want top 3, but for now we get 3 most recent with photos
@@ -78,16 +79,17 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         const date = new Date(activity["start_date_local"]);
 
         // Only count current year in "year in review"
-        if (date.getUTCFullYear() === current_year) {
+        if (date.getFullYear() === current_year) {
+            total_year_activities += 1;
 
             // Increment dates with an activity
             dates_map.set(date, dates_map.get(date) === undefined ? 1 : dates_map.get(date) + 1);
 
             // Increment month with an activity
-            month_map.set(date.getUTCMonth(), month_map.get(date.getUTCMonth()) === undefined ? 1 : month_map.get(date.getUTCMonth()) + 1);
+            month_map.set(date.getMonth(), month_map.get(date.getMonth()) === undefined ? 1 : month_map.get(date.getMonth()) + 1);
 
             // Increment hour of day an activity was done
-            hours_map.set(date.getUTCHours(), hours_map.get(date.getUTCHours()) === undefined ? 1 : hours_map.get(date.getUTCHours()) + 1);
+            hours_map.set(date.getHours(), hours_map.get(date.getHours()) === undefined ? 1 : hours_map.get(date.getHours()) + 1);
 
             total_kudos += activity["kudos_count"];
 
@@ -158,7 +160,9 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         days_active_percentage,
         month_map,
         pr_count,
-        achievement_count
+        achievement_count,
+        getTopActivityTimeOfDay(hours_map),
+        total_year_activities
     ];
 }
 
@@ -166,8 +170,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
 function getTotalDaysActive(dates_map, current_year = 2022) {
     const year_days = new Set();
     dates_map.forEach (function(value, key) {
-        if (key.getUTCFullYear() === current_year) {
-            year_days.add(key.getUTCMonth() + '/' + key.getUTCDate());
+        if (key.getFullYear() === current_year) {
+            year_days.add(key.getMonth() + '/' + key.getDate());
         }
     });
     return year_days.size;
@@ -205,6 +209,31 @@ function getTotalDaysActivePercentage(total_days_active) {
         return 10;
     } else if (total_days_active >= 100) {
         return 50;
+    } else {
+        return 100;
+    }
+}
+
+function getTopActivityTimeOfDay(hours_map) {
+    let morning = 0;
+    let evening = 0;
+    let night = 0;
+    hours_map.forEach (function(value, key) {
+        if (key <= 12) {
+            morning += 1
+        } else if (key <= 18) {
+            evening += 1;
+        } else {
+            night += 1;
+        }
+    });
+
+    // I don't like how this breaks ties
+    // 33 = morning, 66 = evening, 100 = night
+    if (morning >= evening && morning >= night) {
+        return 33;
+    } else if (evening >= morning && evening >= night) {
+        return 66;
     } else {
         return 100;
     }

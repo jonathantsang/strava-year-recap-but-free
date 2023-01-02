@@ -92,7 +92,6 @@ runner, biker, etc.?
 
 ```
 Morning
-Noon
 Evening
 Night - Twilight
 ```
@@ -104,6 +103,6 @@ Popular - Celebrity of Kudos
 ```
 
 ```
-Lone Wolf (main activities solo)
+Solo (main activities solo)
 Group (main activities are groups)
 ```

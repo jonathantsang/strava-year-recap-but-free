@@ -225,8 +225,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
             }
 
 
-            // Do not count ski?
-            if (actvity["sport_type"].includes("Ski") === false) {
+            // Remove actvities with a ski lift and messes up elevation
+            if (actvity["sport_type"].includes("Ski") === false && activity["sport_type"].includes("Snowboard") === false) {
                 total_elevation += activity["total_elevation_gain"];
             }
 

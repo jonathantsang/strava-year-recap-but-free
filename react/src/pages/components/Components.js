@@ -459,7 +459,7 @@ export function StravaArchetypeCard(props) {
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.archetype_colour}>
+        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour}>
           <WorkspacePremiumIcon sx={{width: "5rem", height: "5rem"}}/>
         </LargeStyledAvatar>
       </CardContent>

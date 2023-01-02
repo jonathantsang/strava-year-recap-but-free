@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard, StravaArchetypeCard, HireMe } from "./components/Components";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
-    console.log(activities);
+    // console.log(activities);
     // console.log(returnTokens); // accessToken
     return (
         <div>
@@ -18,9 +18,9 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  sport_two_name={activities[5][1][1]}
                                  sport_three={activities[5][2][0]/activities[14]*100}
                                  sport_three_name={activities[5][2][1]}
-                                 archetype_colour="red"
-                                 strava_archetype="Group Morning Athlete"
-                                 strava_archetype_description="You got your main sport. The majority of your activities are with others. Mornings are your most popular time. You receive more kudos on activities than the majority of Strava users."
+                                 strava_archetype={activities[15][0]}
+                                 strava_archetype_description={activities[15][1]}
+                                 strava_archetype_colour={activities[16]}
                                  />
 
             <br />

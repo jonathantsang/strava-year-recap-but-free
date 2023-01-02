@@ -6,6 +6,66 @@ function metreToFeet(amount) {
     return Math.round(amount * 3.281); // approximate
 }
 
+var stringToColour = function(str) {
+  var hash = 0;
+  for (var j = 0; j < str.length; j++) {
+    hash = str.charCodeAt(j) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}
+
+
+// I like ... sport
+const SportTypeEnumMap = new Map(Object.entries(
+    {AlpineSki: "alpine skiing",
+     BackcountrySki: "backcountry skiing",
+     Canoeing: "canoeing",
+     Crossfit: "crossfit",
+     EBikeRide: "ebiking",
+     Elliptical: "elliptical",
+     EMountainBikeRide: "emountain biking",
+     Golf: "golfing",
+     GravelRide: "gravel riding",
+     Handcycle: "handcycling",
+     Hike: "hiking",
+     IceSkate: "ice skating",
+     InlineSkate: "inline skating",
+     Kayaking: "kayaking",
+     Kitesurf: "kite surfing",
+     MountainBikeRide: "mountain biking",
+     NordicSki: "nordic skiing",
+     Ride: "biking",
+     RockClimbing: "rock climbing",
+     RollerSki: "roller skiing",
+     Rowing: "rowing",
+     Run: "running",
+     Sail: "sailing",
+     Skateboard: "skateboarding",
+     Snowboard: "snowboarding",
+     Snowshoe: "snowshoeing",
+     Soccer: "playing soccer",
+     StairStepper: "using the stairstepper",
+     StandUpPaddling: "standup paddling",
+     Surfing: "surfing",
+     Swim: "swimming",
+     TrailRun: "trail running",
+     Velomobile: "using a velomobile",
+     VirtualRide: "virtually biking",
+     VirtualRun: "virtually running",
+     Walk: "walking",
+     WeightTraining: "weight training",
+     Wheelchair: "using a wheel chair",
+     Windsurf: "windsurfing",
+     Workout: "working out",
+     Yoga: "doing yoga"
+    }
+));
+
 export const setUserActivities = (data) => {
     data.data.ytd_run_totals.distance = metreToMiles(data.data.ytd_run_totals.distance);
     data.data.ytd_ride_totals.distance = metreToMiles(data.data.ytd_ride_totals.distance);
@@ -48,8 +108,71 @@ function getHighestSportTypeCounts(sport_type_map) {
             highest_sport_type_counts.pop();
         }
     });
+
+    highest_sport_type_counts.forEach (function(item, index, arr) {
+        highest_sport_type_counts[index] = [highest_sport_type_counts[index][0], SportTypeEnumMap.get(highest_sport_type_counts[index][1])]
+    });
+
     return highest_sport_type_counts;
 }
+
+function getArchetypeData(highest_sports_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos) {
+    let sport_balance_text = "";
+    let athlete_count_text = "";
+    let time_of_day_text = "";
+    let kudos_count_text = "";
+
+    // Title
+    let athlete_count_title_text = "";
+    let time_of_day_title_text = ""
+    let athlete_type_title_text = "Athlete";
+
+    // See percentage of activities different by 0.15
+    if (Math.abs(highest_sports_type_counts[0][0] / total_year_activities - highest_sports_type_counts[1][0] / total_year_activities) > 0.15) {
+        sport_balance_text = "mainly like " + highest_sports_type_counts[0][1];
+    } else {
+        sport_balance_text = "balance between " + highest_sports_type_counts[0][1] + " and " + highest_sports_type_counts[1][1]
+    }
+
+    if (athlete_count_count[0] <= athlete_count_count[1]) {
+        athlete_count_text = "you do a lot of your activities in a group!";
+        athlete_count_title_text = "Group";
+    } else {
+        athlete_count_text = "most of the time your like doing activities on your own.";
+        athlete_count_title_text = "Solo";
+    }
+
+    if (top_activity_time_of_day === 33) {
+        time_of_day_text = "You must be a morning person because mornings are your most popular time of day.";
+        time_of_day_title_text = "Morning";
+    } else if (top_activity_time_of_day === 66) {
+        time_of_day_text = "You get most activities done during the day.";
+        time_of_day_title_text = "Midday";
+    } else {
+        time_of_day_text = "You get most activities done during the night.";
+        time_of_day_title_text = "Night";
+    }
+
+    if (total_kudos >= 10000) {
+        kudos_count_text = "You receive more kudos than the majority of Strava users.";
+    } else if (total_kudos >= 1000) {
+        kudos_count_text = "You receive a lot of kudos on each of your activities!";
+    } else {
+        kudos_count_text = "You receive a fair amount of kudos on each activity.";
+    }
+
+    // Title text
+    if (highest_sports_type_counts[0][1].includes("run")) {
+        athlete_type_title_text = "Runner";
+    } else if (highest_sports_type_counts[0][1].includes("bike")) {
+        athlete_type_title_text = "Biker";
+    }
+
+    let description = `You ${sport_balance_text} and ${athlete_count_text} ${time_of_day_text} ${kudos_count_text}`
+    let title = `${athlete_count_title_text} ${time_of_day_title_text} ${athlete_type_title_text}`
+    return [title, description]
+}
+
 
 // Goes through the activities for analyzing data
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
@@ -66,6 +189,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     let longest_ride = null;
     let biggest_climb_ride = null;
     let total_year_activities = 0;
+    let athlete_count_count = []; // [solo, group]
+
     // Not sure about PRs and achievements overlapping
     let pr_count = 0;
     let achievement_count = 0;
@@ -93,6 +218,13 @@ function goThroughActivities(activities, photos, current_year = 2022) {
 
             total_kudos += activity["kudos_count"];
 
+            if (activity["athlete_count"] === 1) {
+                athlete_count_count[0] += 1
+            } else {
+                athlete_count_count[1] += 1
+            }
+
+
             total_elevation += activity["total_elevation_gain"];
 
             total_distance += activity["distance"];
@@ -117,6 +249,13 @@ function goThroughActivities(activities, photos, current_year = 2022) {
 
     // SportType, amount
     const highest_sport_type_counts = getHighestSportTypeCounts(sport_type_map);
+
+    // Most popular time of day
+    const top_activity_time_of_day = getTopActivityTimeOfDay(hours_map);
+
+    // archetype
+    const archetype_data = getArchetypeData(highest_sport_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
+    const archetype_colour = stringToColour(archetype_data[1]);
 
     // Make it easier and divide each month to get percentage for each month
     month_map.forEach (function(value, key) {
@@ -161,8 +300,10 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         month_map,
         pr_count,
         achievement_count,
-        getTopActivityTimeOfDay(hours_map),
-        total_year_activities
+        top_activity_time_of_day,
+        total_year_activities,
+        archetype_data,
+        archetype_colour
     ];
 }
 

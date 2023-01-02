@@ -1,12 +1,9 @@
+import { StyledAvatar, LargeStyledAvatar, LinearProgressWithLabel } from "./Extras";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 // Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
 import DirectionsBike from '@mui/icons-material/DirectionsBike';
@@ -14,72 +11,6 @@ import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ParkIcon from '@mui/icons-material/Park';
-
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: "#ED4F2F",
-  },
-}));
-
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1, colorPrimary: "#1a90ff" }}>
-        <BorderLinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="#A8B15E">{props.month}</Typography>
-      </Box>
-    </Box>
-  );
-}
-
-function LinearProgressWithDoubleLabel(props: LinearProgressProps & { value: number }) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="#A8B15E">{props.front}</Typography>
-      </Box>
-      <Box sx={{ width: '80%', mr: 1, ml: 1, colorPrimary: "#1a90ff" }}>
-        <BorderLinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="#A8B15E">{props.back}</Typography>
-      </Box>
-    </Box>
-  );
-}
-
-function LinearProgressWithFixedLabel(props: LinearProgressProps & { value: number }) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: 75 }}>
-        <Typography variant="body2" color="#A8B15E">{props.front}</Typography>
-      </Box>
-      <Box sx={{ width: '80%', mr: 1, ml: 1, colorPrimary: "#1a90ff" }}>
-        <BorderLinearProgress variant="determinate" {...props} />
-      </Box>
-    </Box>
-  );
-}
-
-const StyledAvatar = ({ children, ...props }) => (
-    <Avatar sx={{ height: '70px', width: '70px' }} {...props}>
-        {children}
-    </Avatar>
-);
-
-const LargeStyledAvatar = ({ children, ...props }) => (
-    <Avatar sx={{ height: props.height, width: props.width, bgcolor: props.bgcolor }} {...props}>
-        {children}
-    </Avatar>
-);
 
 export function TotalsCard(props) {
   return (
@@ -114,17 +45,17 @@ export function TotalsCard(props) {
           </Typography>
         </CardContent>
 
-        {(props.top_sport_type.includes("walk") || props.top_sport_type.includes("biking") || props.top_sport_type.includes("run")) && <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
+        {(props.top_sport_type.toLowerCase().includes("walk") || props.top_sport_type.toLowerCase().includes("biking") || props.top_sport_type.toLowerCase().includes("run")) && <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
           <Typography variant="body2" color="white">
             TOP SPORT
           </Typography>
-          {props.top_sport_type.includes("walk") &&
+          {props.top_sport_type.toLowerCase().includes("walk") &&
             <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
             }
-          {props.top_sport_type.includes("biking") &&
+          {props.top_sport_type.toLowerCase().includes("biking") &&
             <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
           }
-          {props.top_sport_type.includes("run") &&
+          {props.top_sport_type.toLowerCase().includes("run") &&
             <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
           }
         </CardContent>
@@ -439,61 +370,4 @@ export function TotalDaysActiveCard(props) {
       </CardActions>
     </Card>
   );
-}
-
-export function StravaArchetypeCard(props) {
-  return (
-    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black', color: 'white'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography gutterBottom variant="h4" component="div" margin="0px">
-          My Strava Archetype
-        </Typography>
-      </CardContent>
-
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour}>
-          {props.top_sport_type.includes("walk") &&
-            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
-            }
-          {props.top_sport_type.includes("biking") &&
-            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
-          }
-          {props.top_sport_type.includes("run") &&
-            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
-          }
-        </LargeStyledAvatar>
-      </CardContent>
-
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography gutterBottom variant="h4" component="div" margin="0px">
-          {props.strava_archetype}
-        </Typography>
-      </CardContent>
-
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography gutterBottom variant="h6" component="div" margin="0px">
-          {props.strava_archetype_description}
-        </Typography>
-        <br />
-      </CardContent>
-
-      <CardContent sx={{backgroundColor:'#062E4F', color: "white",}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px">
-          MY TOP SPORTS
-        </Typography>
-        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_one} front={props.sport_one_name} back=""/>
-        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_two} front={props.sport_two_name} back=""/>
-        <LinearProgressWithFixedLabel variant="determinate" value={props.sport_three} front={props.sport_three_name} back=""/>
-      </CardContent>
-    </Card>
-  );
-}
-
-export function HireMe(props) {
-    return (
-        <div>
-          <p>Want to hire me Strava?</p>
-          <p>Here is my <a href="https://www.linkedin.com/in/jonathan-tsang/">LinkedIn</a></p>
-        </div>
-    );
 }

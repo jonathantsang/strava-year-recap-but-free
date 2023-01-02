@@ -1,6 +1,7 @@
 import React from "react";
 
-import { HireMe } from "./components/Components";
+import { HireMe } from "./components/Extras";
+import { PRCard } from "./components/cards/PRCard";
 
 const { REACT_APP_CLIENT_ID } = process.env;
 //const redirectUrl = "https://strava-year-recap-but-free-x7xf.vercel.app/redirect"
@@ -15,8 +16,6 @@ const Home = () => {
         <div>
 
             <HireMe />
-
-            <br />
 
             <p>Disclaimer</p>
             <strong>Exact data may not match official stats due to API limitations and estimating days active curve.</strong>

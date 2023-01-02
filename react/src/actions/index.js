@@ -1,70 +1,11 @@
-function metreToMiles(amount) {
-    return Math.round(amount / 1609); // approximate
-}
-
-function metreToFeet(amount) {
-    return Math.round(amount * 3.281); // approximate
-}
-
-var stringToColour = function(str) {
-  var hash = 0;
-  for (var j = 0; j < str.length; j++) {
-    hash = str.charCodeAt(j) + ((hash << 5) - hash);
-  }
-  var colour = '#';
-  for (var i = 0; i < 3; i++) {
-    var value = (hash >> (i * 8)) & 0xFF;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
-}
-
-
-// I like ... sport
-const SportTypeEnumMap = new Map(Object.entries(
-    {AlpineSki: "alpine skiing",
-     BackcountrySki: "backcountry skiing",
-     Canoeing: "canoeing",
-     Crossfit: "crossfit",
-     EBikeRide: "ebiking",
-     Elliptical: "elliptical",
-     EMountainBikeRide: "emountain biking",
-     Golf: "golfing",
-     GravelRide: "gravel biking",
-     Handcycle: "handcycling",
-     Hike: "hiking",
-     IceSkate: "ice skating",
-     InlineSkate: "inline skating",
-     Kayaking: "kayaking",
-     Kitesurf: "kite surfing",
-     MountainBikeRide: "mountain biking",
-     NordicSki: "nordic skiing",
-     Ride: "biking",
-     RockClimbing: "rock climbing",
-     RollerSki: "roller skiing",
-     Rowing: "rowing",
-     Run: "running",
-     Sail: "sailing",
-     Skateboard: "skateboarding",
-     Snowboard: "snowboarding",
-     Snowshoe: "snowshoeing",
-     Soccer: "playing soccer",
-     StairStepper: "using the stairstepper",
-     StandUpPaddling: "standup paddling",
-     Surfing: "surfing",
-     Swim: "swimming",
-     TrailRun: "trail running",
-     Velomobile: "using a velomobile",
-     VirtualRide: "virtually biking",
-     VirtualRun: "virtually running",
-     Walk: "walking",
-     WeightTraining: "weight training",
-     Wheelchair: "using a wheel chair",
-     Windsurf: "windsurfing",
-     Workout: "working out",
-     Yoga: "doing yoga"
-    }
-));
+import { metreToMiles, metreToFeet, stringToColour } from './utilities';
+import { convertMonthMap,
+         getHighestSportTypeCounts,
+         getTopActivityTimeOfDay,
+         getTotalDaysActive,
+         getTotalDaysActivePercentage,
+         saveBestEffortsRun,
+         getBestEffortRunList } from "./time_and_date";
 
 export const setUserActivities = (data) => {
     data.data.ytd_run_totals.distance = metreToMiles(data.data.ytd_run_totals.distance);
@@ -92,30 +33,6 @@ export const setAthlete = (data) => {
   }
 }
 
-function getHighestSportTypeCounts(sport_type_map) {
-    // Get top 3
-    let highest_sport_type_counts = []; // [amount, sport_type]
-
-    sport_type_map.forEach (function(value, key) {
-        highest_sport_type_counts.push([value.size, key]);
-
-        // sort each iteration
-        // this is less efficient but based on fixed number of sport_type and it being length == 3 at max
-        // I think it is fine for now
-        // want max value at the front
-        highest_sport_type_counts.sort(function(a, b){return b[0] - a[0]});
-        if (highest_sport_type_counts.length >= 4) {
-            highest_sport_type_counts.pop();
-        }
-    });
-
-    highest_sport_type_counts.forEach (function(item, index, arr) {
-        highest_sport_type_counts[index] = [highest_sport_type_counts[index][0], SportTypeEnumMap.get(highest_sport_type_counts[index][1])]
-    });
-
-    return highest_sport_type_counts;
-}
-
 function getArchetypeData(highest_sports_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos) {
     let sport_balance_text = "";
     let athlete_count_text = "";
@@ -132,9 +49,9 @@ function getArchetypeData(highest_sports_type_counts, total_year_activities, ath
 
     // See percentage of activities different by 0.15
     if (Math.abs(highest_sports_type_counts[0][0] / total_year_activities - highest_sports_type_counts[1][0] / total_year_activities) > 0.15) {
-        sport_balance_text = "mainly like " + highest_sports_type_counts[0][1];
+        sport_balance_text = "mainly like " + highest_sports_type_counts[0][1].toLowerCase();
     } else {
-        sport_balance_text = "balance between " + highest_sports_type_counts[0][1] + " and " + highest_sports_type_counts[1][1]
+        sport_balance_text = "balance between " + highest_sports_type_counts[0][1].toLowerCase() + " and " + highest_sports_type_counts[1][1].toLowerCase()
     }
 
     if (athlete_count_count[0] <= athlete_count_count[1]) {
@@ -176,6 +93,18 @@ function getArchetypeData(highest_sports_type_counts, total_year_activities, ath
     return [title, description]
 }
 
+function getActivityBreakdownMap(highest_sport_type_counts, total_year_activities) {
+    var res = [];
+    var pie_rest_amount = 100;
+    highest_sport_type_counts.slice(0,4).forEach (function(item, index, arr) {
+        const value = item[0] / total_year_activities * 100;
+        pie_rest_amount -= Math.round(value);
+        res.push({argument: item[1] + " " + Math.round(value) + "%", value: Math.round(value)});
+    });
+    res.push({argument: "Other", value: Math.round(pie_rest_amount)})
+    return res;
+}
+
 
 // Goes through the activities for analyzing data
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
@@ -185,14 +114,16 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     const hours_map = new Map();
     const month_map = new Map();
     const sport_type_map = new Map(); // each has a set with times for calculating archetype
+    const best_effort_run_map = new Map();
 
     let total_kudos = 0; // calculates total kudos received
     let total_elevation = 0; // total elevation from activities. Strava is vague so I count run + bike in total
     let total_distance = 0; // total distance from activities (all sportTypes)
+    let total_year_activities = 0;
+
     // Store the longest/largest elevation ride here
     let longest_ride = null;
     let biggest_climb_ride = null;
-    let total_year_activities = 0;
     let athlete_count_count = []; // [solo, group]
 
     // Not sure about PRs and achievements overlapping
@@ -228,9 +159,13 @@ function goThroughActivities(activities, photos, current_year = 2022) {
                 athlete_count_count[1] += 1
             }
 
+            // find best 5k, 10k, half marathon, and marathon effort
+            // use distance (given in m)
+            // use moving_time (given in seconds)
+            saveBestEffortsRun(best_effort_run_map, activity);
 
             // Remove actvities with a ski lift and messes up elevation
-            if (actvity["sport_type"].includes("Ski") === false && activity["sport_type"].includes("Snowboard") === false) {
+            if (activity["sport_type"].includes("Ski") === false && activity["sport_type"].includes("Snowboard") === false) {
                 total_elevation += activity["total_elevation_gain"];
             }
 
@@ -258,45 +193,27 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         }
     }
 
+    convertMonthMap(month_map, current_year);
+
     // SportType, amount
     const highest_sport_type_counts = getHighestSportTypeCounts(sport_type_map);
+
+    // annoying
+    const activity_breakdown_map = getActivityBreakdownMap(highest_sport_type_counts, total_year_activities);
 
     // Most popular time of day
     const top_activity_time_of_day = getTopActivityTimeOfDay(hours_map);
 
     // archetype
-    const archetype_data = getArchetypeData(sport_type_map, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
+    const archetype_data = getArchetypeData(highest_sport_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
     const archetype_colour = stringToColour(archetype_data[1]);
-
-    // Make it easier and divide each month to get percentage for each month
-    month_map.forEach (function(value, key) {
-        // I hate this logic of how many days are in a month
-        if (key <= 6) {
-            if (key === 1) { // February
-                // leap year?
-                if (current_year % 4 === 0) {
-                    value /= 29;
-                } else {
-                    value /= 28;
-                }
-            } else if (key % 2 === 1) { // April, May, July etc.
-                value /= 30;
-            } else {
-                value /= 31;
-            }
-        } else {
-            if (key % 2 === 1) { // August, October, December, etc.
-                value /= 31;
-            } else {
-                value /= 30;
-            }
-        }
-        // month_map.set(key, value);
-    });
 
     const total_days_active = getTotalDaysActive(dates_map, current_year);
     const days_active_percentage = getTotalDaysActivePercentage(total_days_active);
 
+    const best_effort_run_list = getBestEffortRunList(best_effort_run_map);
+
+    // I hate this
     return [
         dates_map,
         total_days_active,
@@ -315,81 +232,10 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         total_year_activities,
         archetype_data,
         archetype_colour,
-        current_year
+        current_year,
+        activity_breakdown_map,
+        best_effort_run_list
     ];
-}
-
-// Get the total days active in current_year by going through and counting them manually
-function getTotalDaysActive(dates_map, current_year = 2022) {
-    const year_days = new Set();
-    dates_map.forEach (function(value, key) {
-        if (key.getFullYear() === current_year) {
-            year_days.add(key.getMonth() + '/' + key.getDate());
-        }
-    });
-    return year_days.size;
-}
-
-// TODO
-function getTotalDaysActivePercentage(total_days_active) {
-    // Interpolation of a regular distribution and trying to extrapolate with real data but
-    // also holding other stuff constant
-
-    // 309 is 1% (me)
-
-    // For testing we are PURELY going to guess
-    // Ideally we do some distribution curve but we are short on time
-    // 365-309 is 1%
-    // 309-290 is 2%
-    // 290-280 is 3%
-    // 280-270 is 4%
-    // 270-260 is 5%
-    // 260-200 is 10%
-    // 200-100 is 50%
-    // rest is top 100% lmao
-
-    if (total_days_active >= 309) {
-        return 1;
-    } else if (total_days_active >= 290) {
-        return 2;
-    } else if (total_days_active >= 280) {
-        return 3;
-    } else if (total_days_active >= 270) {
-        return 4;
-    } else if (total_days_active >= 260) {
-        return 5;
-    } else if (total_days_active >= 200) {
-        return 10;
-    } else if (total_days_active >= 100) {
-        return 50;
-    } else {
-        return 100;
-    }
-}
-
-function getTopActivityTimeOfDay(hours_map) {
-    let morning = 0;
-    let evening = 0;
-    let night = 0;
-    hours_map.forEach (function(value, key) {
-        if (key <= 12) {
-            morning += value
-        } else if (key <= 18) {
-            evening += value;
-        } else {
-            night += value;
-        }
-    });
-
-    // I don't like how this breaks ties
-    // 33 = morning, 66 = evening, 100 = night
-    if (morning >= evening && morning >= night) {
-        return 33;
-    } else if (evening >= morning && evening >= night) {
-        return 66;
-    } else {
-        return 100;
-    }
 }
 
 export const setActivities = (data, page2 = [], page3 = [], page4 = [], photos = [], accessToken) => {

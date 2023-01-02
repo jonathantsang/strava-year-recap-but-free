@@ -1,13 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
-import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard, StravaArchetypeCard, HireMe } from "./components/Components";
+import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard } from "./components/Cards";
+import { HireMe } from "./components/Extras";
+import { ActivityBreakdownCard } from "./components/cards/ActivityBreakdownCard";
+import { StravaArchetypeCard } from "./components/cards/StravaArchetypeCard";
+import { PRCard } from "./components/cards/PRCard";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
-    // console.log(activities);
+    console.log(activities);
     // console.log(returnTokens); // accessToken
     return (
         <div>
             <HireMe />
+
+            <PRCard current_year={activities[17]}
+                    part_one_title={activities[19][0][1]}
+                    part_one_description={activities[19][0][0]["name"]}
+                    part_one_after={activities[19][0][2]}
+                    part_two_title={activities[19][1][1]}
+                    part_two_description={activities[19][1][0]["name"]}
+                    part_two_after={activities[19][1][2]}
+                    part_three_title={activities[19][2][1]}
+                    part_three_description={activities[19][2][0]["name"]}
+                    part_three_after={activities[19][2][2]}/>
+            <br />
+
+            <ActivityBreakdownCard data={activities[18]}/>
+
+            <br />
 
             <StravaArchetypeCard activity_score={activities[9]}
                                  time_of_day={activities[13]}

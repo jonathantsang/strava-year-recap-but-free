@@ -114,29 +114,21 @@ export function TotalsCard(props) {
           </Typography>
         </CardContent>
 
-        {props.top_sport_type !== "None" && <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
+        {(props.top_sport_type.includes("walk") || props.top_sport_type.includes("biking") || props.top_sport_type.includes("run")) && <CardContent sx={{backgroundColor: '#276267', color:'white', height:'100%', outline: "black 2px solid" }}>
           <Typography variant="body2" color="white">
             TOP SPORT
           </Typography>
-          {props.top_sport_type === "Walk" &&
+          {props.top_sport_type.includes("walk") &&
             <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
             }
-          {props.top_sport_type === "Ride" &&
+          {props.top_sport_type.includes("biking") &&
             <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
           }
-          {props.top_sport_type === "MountainBikeRide" &&
-            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
-          }
-          {props.top_sport_type === "GravelRide" &&
-            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
-          }
-          {props.top_sport_type === "TrailRun" &&
+          {props.top_sport_type.includes("run") &&
             <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
           }
-          {props.top_sport_type === "Run" &&
-            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
-          }
-        </CardContent> }
+        </CardContent>
+        }
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#ff6600', color:'white', outline: "black 2px solid"}}>
@@ -460,7 +452,15 @@ export function StravaArchetypeCard(props) {
 
       <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour}>
-          <WorkspacePremiumIcon sx={{width: "5rem", height: "5rem"}}/>
+          {props.top_sport_type.includes("walk") &&
+            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
+            }
+          {props.top_sport_type.includes("biking") &&
+            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.top_sport_type.includes("run") &&
+            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
+          }
         </LargeStyledAvatar>
       </CardContent>
 

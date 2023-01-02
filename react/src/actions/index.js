@@ -30,7 +30,7 @@ const SportTypeEnumMap = new Map(Object.entries(
      Elliptical: "elliptical",
      EMountainBikeRide: "emountain biking",
      Golf: "golfing",
-     GravelRide: "gravel riding",
+     GravelRide: "gravel biking",
      Handcycle: "handcycling",
      Hike: "hiking",
      IceSkate: "ice skating",
@@ -164,7 +164,7 @@ function getArchetypeData(highest_sports_type_counts, total_year_activities, ath
     // Title text
     if (highest_sports_type_counts[0][1].includes("run")) {
         athlete_type_title_text = "Runner";
-    } else if (highest_sports_type_counts[0][1].includes("bike")) {
+    } else if (highest_sports_type_counts[0][1].includes("biking")) {
         athlete_type_title_text = "Biker";
     }
 

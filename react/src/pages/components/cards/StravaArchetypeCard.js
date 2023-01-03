@@ -19,7 +19,7 @@ export function StravaArchetypeCard(props) {
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour} style={{background: 'linear-gradient(rgba(250,0,0,0.9),transparent)'}}>
+        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour} style={{background: "linear-gradient(#e66465, #9198e5)"}}>
           {props.top_sport_type.toLowerCase().includes("walk") &&
             <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
           }

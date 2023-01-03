@@ -48,7 +48,7 @@ export function StravaArchetypeCard(props) {
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography gutterBottom variant="h6" component="div" margin="0px">
+        <Typography gutterBottom variant="subtitle2" component="div" margin="0px">
           {props.strava_archetype_description}
         </Typography>
         <br />

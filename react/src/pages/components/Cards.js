@@ -1,4 +1,6 @@
 import { StyledAvatar, LargeStyledAvatar, LinearProgressWithLabel } from "./Extras";
+import { StravaBanner } from "./strava/Strava";
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,12 +17,7 @@ import ParkIcon from '@mui/icons-material/Park';
 export function TotalsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -96,12 +93,7 @@ export function TotalsCard(props) {
 export function TopPercentCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -144,12 +136,7 @@ export function TopPercentCard(props) {
 export function TopPhotosCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 1000 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -214,12 +201,7 @@ export function TopPhotosCard(props) {
 export function TotalElevationTotalDistanceCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -265,12 +247,7 @@ export function TotalElevationTotalDistanceCard(props) {
 export function AchievementsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -324,12 +301,7 @@ export function AchievementsCard(props) {
 export function TotalDaysActiveCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-        <hr />
-      </CardContent>
+      <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">

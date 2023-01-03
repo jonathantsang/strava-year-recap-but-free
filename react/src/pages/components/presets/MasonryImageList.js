@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
+// Should set columns based on how many photos you have
 export function MasonryImageList(props) {
   return (
     <Box sx={{ width: 400, height: 800, overflowY: 'scroll' }}>

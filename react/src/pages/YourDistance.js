@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useRef, navigate } from "react";
 import { connect } from "react-redux";
-import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard } from "./components/Cards";
-import { HireMe } from "./components/Extras";
+import { TotalsCard, TopPercentCard, TopPhotosCard, TotalDaysActiveCard, AchievementsCard } from "./components/cards/StravaCards";
+import { HireMe, LogOutButton } from "./components/Extras";
 import { ActivityBreakdownCard } from "./components/cards/ActivityBreakdownCard";
 import { StravaArchetypeCard } from "./components/cards/StravaArchetypeCard";
 import { PRCard } from "./components/cards/PRCard";
 import { YearCollageCard, YearCollagePoster } from "./components/cards/YearCollageCard";
+import { DownloadButton } from "./components/utils/Download"
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
+    const posterRef = useRef();
+    const prRef = useRef();
+    const abRef = useRef();
+    const saRef = useRef();
+    const tpRef = useRef();
+    const totalsRef = useRef();
+    const totalDaysRef = useRef();
+    const achievementsRef = useRef();
+    const topPhotosRef = useRef();
+
+    const goHome = () => {
+        navigate("/../"); // ? fix this
+    }
+
+    //console.log(activities);
+    // console.log(returnToken); // accessToken
     return (
         <div>
+            <LogOutButton onClick={goHome}/>
+
             <HireMe />
 
             <YearCollagePoster current_year={activities[17]}
-                               photos_urls={activities[20]}/>
+                               photos_urls={activities[20]}
+                               propRef={posterRef}/>
 
             <br />
 
@@ -31,10 +51,11 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                     part_two_after={activities[19][1][2]}
                     part_three_title={activities[19][2][1]}
                     part_three_description={activities[19][2][0]["name"]}
-                    part_three_after={activities[19][2][2]}/>
+                    part_three_after={activities[19][2][2]}
+                    propRef={prRef}/>
             <br />
 
-            <ActivityBreakdownCard data={activities[18]}/>
+            <ActivityBreakdownCard data={activities[18]} propRef={abRef}/>
 
             <br />
 
@@ -53,12 +74,14 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  strava_archetype_gradient_colour={activities[15][2]}
                                  current_year={activities[17]}
                                  top_sport_type={activities[5][0][1]}
+                                 propRef={saRef}
                                  />
 
             <br />
 
             <TopPercentCard top_percentage={activities[9]}
-                            current_year = {activities[17]}/>
+                            current_year = {activities[17]}
+                            propRef={tpRef}/>
 
             <br />
 
@@ -69,7 +92,8 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                         last_name= {returnTokens.athlete.lastname}
                         avatar_src={returnTokens.athlete.profile}
                         top_sport_type={activities[5][0][1]}
-                        current_year = {activities[17]}/>
+                        current_year = {activities[17]}
+                        propRef={totalsRef}/>
 
             <br />
 
@@ -87,14 +111,16 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  oct={activities[10].get(9)}
                                  nov={activities[10].get(10)}
                                  dec={activities[10].get(11)}
-                                 current_year = {activities[17]}/>
+                                 current_year = {activities[17]}
+                                 propRef={totalDaysRef}/>
 
             <br />
 
             <AchievementsCard kudos_received={activities[2].toLocaleString()}
                               local_legends="N/A"
-                              personal_records="N/A"
-                              current_year = {activities[17]} />
+                              personal_records={activities[11]}
+                              current_year = {activities[17]}
+                              propRef={achievementsRef}/>
 
             <br />
 
@@ -107,7 +133,8 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                            activity_three_date={activities[8].length > 2 && activities[8][2][1]}
                            activity_three_title={activities[8].length > 2 && activities[8][2][0]}
                            activity_three_src={activities[8].length > 2 && activities[8][2][2]}
-                           current_year = {activities[17]}/>
+                           current_year = {activities[17]}
+                           propRef={topPhotosRef}/>
 
             <br />
 

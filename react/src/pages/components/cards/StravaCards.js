@@ -1,5 +1,6 @@
-import { StyledAvatar, LargeStyledAvatar, LinearProgressWithLabel } from "./Extras";
-import { StravaBanner } from "./strava/Strava";
+import { StyledAvatar, LargeStyledAvatar, LinearProgressWithLabel } from "../Extras";
+import { StravaBanner } from "../strava/Strava";
+import { ShareButton } from '../utils/Download';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,6 +18,7 @@ import ParkIcon from '@mui/icons-material/Park';
 export function TotalsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -26,7 +28,7 @@ export function TotalsCard(props) {
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#F4F4DB', display: "flex", justifyContent: "space-between", alignItems: 'center', outline: "black 2px solid" }}>
-        <StyledAvatar alt="Strava user" src={props.avatar_src} />
+        <StyledAvatar crossOrigin="true" alt="Strava user" src={props.avatar_src} />
         <Typography variant="h5" color="text.primary">
           {props.first_name} {props.last_name}
         </Typography>
@@ -82,10 +84,8 @@ export function TotalsCard(props) {
           MILES
         </Typography>
       </CardContent>
-
-      <CardActions>
-        <Button size="small">Share</Button>
-      </CardActions>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -93,6 +93,7 @@ export function TotalsCard(props) {
 export function TopPercentCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -125,17 +126,16 @@ export function TopPercentCard(props) {
           MOST ACTIVE ON STRAVA IN {props.current_year}
         </Typography>
       </CardContent>
-
-      <CardActions>
-        <Button size="small">Share</Button>
-      </CardActions>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
 
 export function TopPhotosCard(props) {
   return (
-    <Card sx={{ maxWidth: 400, maxHeight: 1100 }}>
+    <Card sx={{ maxWidth: 400, maxHeight: 1200 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -189,6 +189,8 @@ export function TopPhotosCard(props) {
           </Typography>
         </CardContent>
       </CardContent>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -196,6 +198,7 @@ export function TopPhotosCard(props) {
 export function TotalElevationTotalDistanceCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -232,9 +235,8 @@ export function TotalElevationTotalDistanceCard(props) {
         </Typography>
       </CardContent>
 
-      <CardActions>
-        <Button size="small">Share</Button>
-      </CardActions>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -242,6 +244,7 @@ export function TotalElevationTotalDistanceCard(props) {
 export function AchievementsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -286,9 +289,8 @@ export function AchievementsCard(props) {
         </Typography>
       </CardContent>
 
-      <CardActions>
-        <Button size="small">Share</Button>
-      </CardActions>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -296,6 +298,7 @@ export function AchievementsCard(props) {
 export function TotalDaysActiveCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <StravaBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
@@ -332,9 +335,8 @@ export function TotalDaysActiveCard(props) {
         </Typography>
       </CardContent> }
 
-      <CardActions>
-        <Button size="small">Share</Button>
-      </CardActions>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }

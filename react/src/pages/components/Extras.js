@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import HomeIcon from '@mui/icons-material/Home';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -72,9 +73,15 @@ export const LargeStyledAvatar = ({ children, ...props }) => (
 
 export function HireMe(props) {
     return (
-        <div ref={props.refProp}>
+        <div ref={props.propRef}>
           <p>Want to hire me Strava?</p>
           <p>Here is my <a href="https://www.linkedin.com/in/jonathan-tsang/">LinkedIn</a></p>
         </div>
+    );
+}
+
+export function LogOutButton(props) {
+    return (
+        <a href=""><HomeIcon/></a>
     );
 }

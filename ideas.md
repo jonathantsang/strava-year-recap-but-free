@@ -13,6 +13,9 @@ night biker
 
 website or email the result?
 
+## Idea
+- don't need to replicate Strava year in review
+- one/two panels with adjacent level content is fine
 
 ## Strava Archetypes
 

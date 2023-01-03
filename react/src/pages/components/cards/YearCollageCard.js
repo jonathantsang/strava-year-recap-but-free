@@ -5,7 +5,7 @@ import { MasonryImageList, MasonryImageLargeList } from '../presets/MasonryImage
 
 export function YearCollageCard(props) {
   return (
-    <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+    <Card ref={props.propRef} sx={{ maxWidth: 400, maxHeight: 800 }}>
       <CardContent header sx={{backgroundColor:'black'}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           My {props.current_year} on Strava
@@ -19,7 +19,7 @@ export function YearCollageCard(props) {
 
 export function YearCollagePoster(props) {
   return (
-    <Card sx={{ maxWidth: 1200, maxHeight: 900 }}>
+    <Card ref={props.propRef} sx={{ maxWidth: 1200, maxHeight: 900 }}>
       <CardContent header sx={{backgroundColor:'black'}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           My {props.current_year} on Strava

@@ -15,25 +15,6 @@ Strava year in review has:
 - top photos of the year
 - 2022 totals
 
-## Idea
-- don't need to replicate Strava year in review
-- one/two panels with adjacent level content is fine
-
-## Todo
-- ✔️ get Oauth website example
-- ✔️ output (basic) data on frontend
-- ✔️ finish parsing/analytics to get the stats needed
-- ✔️ make basic ui elements to mimic it
-- ✔️ mock up page designs
-- [ ] find a way to screenshot the data and save as an image
-- ✔️ figure out hosting
-- [ ] host on domain
-- [ ] create a ui promoting the site
-
-## Nice to have
-- [ ] figure out react-scripts using openssl deprecated version and can't deploy to prod
-- [ ] cache results in a database so we don't do the call every time
-
 Resources:
 - https://www.grace-dev.com/python-apis/strava-api/
 - https://github.com/dunleavyjack/Strava-OAuth2-Test

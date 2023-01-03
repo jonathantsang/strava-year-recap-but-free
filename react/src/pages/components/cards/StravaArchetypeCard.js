@@ -3,18 +3,19 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LargeStyledAvatar, LinearProgressWithFixedLabel } from "../Extras";
+import { ShareButton } from '../utils/Download';
 // Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
 import DirectionsBike from '@mui/icons-material/DirectionsBike';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 
-
 export function StravaArchetypeCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
+      <div ref={props.propRef}>
       <CardContent header sx={{backgroundColor:'black', color: 'white'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography gutterBottom variant="h4" component="div" margin="0px">
-          My Strava Archetype
+          My Athlete Archetype
         </Typography>
       </CardContent>
 
@@ -61,6 +62,8 @@ export function StravaArchetypeCard(props) {
         <LinearProgressWithFixedLabel variant="determinate" value={props.sport_two} front={props.sport_two_name} back=""/>
         <LinearProgressWithFixedLabel variant="determinate" value={props.sport_three} front={props.sport_three_name} back=""/>
       </CardContent>
+      </div>
+      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }

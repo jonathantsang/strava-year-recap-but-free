@@ -52,7 +52,6 @@ function getPhotosUrls(photos) {
     photos.forEach( function(item, index, arr) {
         photos_urls_list.push({src: item[2], title: item[0]})
     });
-    console.log(photos_urls_list);
     return photos_urls_list;
 }
 

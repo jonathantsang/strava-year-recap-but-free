@@ -22,7 +22,7 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
         sport_balance_text = "You mainly like " + highest_sports_type_counts[0][1].toLowerCase() + ", but from time to time you'll be " + highest_sports_type_counts[1][1].toLowerCase() + ".";
     } else {
         // closer activity acuity
-        sport_balance_text = "You balance between " + highest_sports_type_counts[0][1].toLowerCase() + " and " + highest_sports_type_counts[1][1].toLowerCase() + ".";
+        sport_balance_text = "You mainly balance between " + highest_sports_type_counts[0][1].toLowerCase() + " and " + highest_sports_type_counts[1][1].toLowerCase() + ".";
     }
 
     // This is recalculated based on activity + time of day versus just time of day + if you do group activities

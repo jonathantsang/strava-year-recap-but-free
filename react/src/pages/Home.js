@@ -3,8 +3,8 @@ import React from "react";
 import { HireMe } from "./components/Extras";
 
 const { REACT_APP_CLIENT_ID } = process.env;
-const redirectUrl = "https://strava-year-recap-but-free-x7xf.vercel.app/redirect"
-//const redirectUrl = "http://localhost:3000/redirect"
+//const redirectUrl = "https://strava-year-recap-but-free-x7xf.vercel.app/redirect"
+const redirectUrl = "http://localhost:3000/redirect"
 
 const handleLogin = () => {
     window.location = `http://www.strava.com/oauth/authorize?client_id=${REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${redirectUrl}/exchange_token&approval_prompt=force&scope=profile:read_all,activity:read_all`;

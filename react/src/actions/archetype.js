@@ -11,9 +11,6 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
     let time_of_day_title_text = ""
     let athlete_type_title_text = "Athlete";
 
-    // TODO: Recalculate this based on activity + time of day versus just time of day + if you do group activities
-    // otherwise go back to old "wrong" calculation
-
     // See percentage of activities different by 0.15
     if (Math.abs(highest_sports_type_counts[0][0] / total_year_activities - highest_sports_type_counts[1][0] / total_year_activities) > 0.15) {
         sport_balance_text = "You mainly like " + highest_sports_type_counts[0][1].toLowerCase() + ", but from time to time you'll be " + highest_sports_type_counts[1][1].toLowerCase() + ".";
@@ -22,6 +19,8 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
         sport_balance_text = "You balance between " + highest_sports_type_counts[0][1].toLowerCase() + " and " + highest_sports_type_counts[1][1].toLowerCase() + ".";
     }
 
+    // This is recalculated based on activity + time of day versus just time of day + if you do group activities
+    // otherwise go back to old "wrong" calculation
     // Dictate next part BASED on the top sport
     // ex.
     // if it is running
@@ -32,7 +31,6 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
             relevant_activities.push([value, key]);
         }
     });
-    console.log(relevant_activities);
     relevant_activities.sort(); // Worst case 1 sport, 4 times of day, solo/group so n = 8
 
     // I hate having to recalculate this again

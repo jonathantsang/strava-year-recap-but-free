@@ -174,10 +174,6 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
             <p>You went a total elevation of {activities[4].toLocaleString()} miles</p>
             <p>You went a total distance of {activities[3].toLocaleString()} miles</p>
             <p>Your top sport was {activities[5][0][1]}</p>
-
-            <button type="button">
-                Download as Image
-            </button>
         </div>
     );
 };

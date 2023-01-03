@@ -72,7 +72,7 @@ export const LargeStyledAvatar = ({ children, ...props }) => (
 
 export function HireMe(props) {
     return (
-        <div>
+        <div ref={props.refProp}>
           <p>Want to hire me Strava?</p>
           <p>Here is my <a href="https://www.linkedin.com/in/jonathan-tsang/">LinkedIn</a></p>
         </div>

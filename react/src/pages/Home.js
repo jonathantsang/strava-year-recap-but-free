@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { HireMe } from "./components/Extras";
+import { DownloadButton } from "./components/utils/Download"
 
 const { REACT_APP_CLIENT_ID } = process.env;
 // const redirectUrl = "https://strava-year-recap-but-free-x7xf.vercel.app/redirect"
@@ -11,12 +12,15 @@ const handleLogin = () => {
 };
 
 const Home = () => {
+    const testRef = useRef();
+
     return (
         <div>
-
-            <HireMe />
+            <HireMe id="hire-me" refProp={testRef}/>
 
             <br />
+
+            <DownloadButton propRef={testRef}/>
 
             <p>Disclaimer</p>
             <strong>Exact data may not match official stats due to API limitations and estimating days active curve.</strong>

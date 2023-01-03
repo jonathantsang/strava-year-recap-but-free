@@ -41,6 +41,7 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
                                  strava_archetype={activities[15][0]}
                                  strava_archetype_description={activities[15][1]}
                                  strava_archetype_colour={activities[16]}
+                                 strava_archetype_gradient_colour="linear-gradient(rgba(250,0,0,0.5),transparent)"
                                  current_year={activities[17]}
                                  top_sport_type={activities[5][0][1]}
                                  />

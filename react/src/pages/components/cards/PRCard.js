@@ -7,6 +7,12 @@ import Typography from '@mui/material/Typography';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
+// Shows PRs for set distances for the year
+// issues:
+// 1. If a strava race is not the full amount 13 miles not 13.1 it won't be counted
+// 2. I wanted to do how much better you did a race but it is tough since some people
+// may have a PR that was from years earlier and that is a lot of activities to go through
+
 export function PRCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
@@ -36,7 +42,7 @@ export function PRCard(props) {
         </Typography>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#FEFFFE', display: "flex", justifyContent: "space-between", alignItems: 'center', outline: "black 2px solid"}}>
+      <CardContent sx={{backgroundColor:'#F2F1ED', display: "flex", justifyContent: "space-between", alignItems: 'center', outline: "black 2px solid"}}>
         <CardContent sx={{  width: "200px", padding:"0px" }}>
           <Typography variant="h5">
             {props.part_two_title}

@@ -5,7 +5,9 @@ import { convertMonthMap,
          getTotalDaysActive,
          getTotalDaysActivePercentage,
          saveBestEffortsRun,
-         getBestEffortRunList } from "./time_and_date";
+         getBestEffortRunList,
+         getTimeOfDayBucket } from "./time_and_date";
+import { getArchetypeData } from "./archetype";
 
 export const setUserActivities = (data) => {
     data.data.ytd_run_totals.distance = metreToMiles(data.data.ytd_run_totals.distance);
@@ -31,66 +33,6 @@ export const setAthlete = (data) => {
         type: "SET_ATHLETE",
         payload: data
   }
-}
-
-function getArchetypeData(highest_sports_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos) {
-    let sport_balance_text = "";
-    let athlete_count_text = "";
-    let time_of_day_text = "";
-    let kudos_count_text = "";
-
-    // Title
-    let athlete_count_title_text = "";
-    let time_of_day_title_text = ""
-    let athlete_type_title_text = "Athlete";
-
-    // TODO: Recalculate this based on activity + time of day versus just time of day
-    // otherwise go back to old "wrong" calculation
-
-    // See percentage of activities different by 0.15
-    if (Math.abs(highest_sports_type_counts[0][0] / total_year_activities - highest_sports_type_counts[1][0] / total_year_activities) > 0.15) {
-        sport_balance_text = "mainly like " + highest_sports_type_counts[0][1].toLowerCase();
-    } else {
-        sport_balance_text = "balance between " + highest_sports_type_counts[0][1].toLowerCase() + " and " + highest_sports_type_counts[1][1].toLowerCase()
-    }
-
-    if (athlete_count_count[0] <= athlete_count_count[1]) {
-        athlete_count_text = "you do a lot of your activities in a group!";
-        athlete_count_title_text = "Group";
-    } else {
-        athlete_count_text = "most of the time you like doing activities on your own.";
-        athlete_count_title_text = "Solo";
-    }
-
-    if (top_activity_time_of_day === 33) {
-        time_of_day_text = "You must be a morning person because mornings are your most popular time of day.";
-        time_of_day_title_text = "Morning";
-    } else if (top_activity_time_of_day === 66) {
-        time_of_day_text = "You get most activities done during the day.";
-        time_of_day_title_text = "Midday";
-    } else {
-        time_of_day_text = "You get most activities done during the night.";
-        time_of_day_title_text = "Night";
-    }
-
-    if (total_kudos >= 10000) {
-        kudos_count_text = "You receive more kudos than the majority of Strava users.";
-    } else if (total_kudos >= 1000) {
-        kudos_count_text = "You receive a lot of kudos on each of your activities!";
-    } else {
-        kudos_count_text = "You receive a fair amount of kudos on each activity.";
-    }
-
-    // Title text
-    if (highest_sports_type_counts[0][1].includes("run")) {
-        athlete_type_title_text = "Runner";
-    } else if (highest_sports_type_counts[0][1].includes("biking")) {
-        athlete_type_title_text = "Biker";
-    }
-
-    let description = `You ${sport_balance_text} and ${athlete_count_text} ${time_of_day_text} ${kudos_count_text}`
-    let title = `${athlete_count_title_text} ${time_of_day_title_text} ${athlete_type_title_text}`
-    return [title, description]
 }
 
 function getActivityBreakdownMap(highest_sport_type_counts, total_year_activities) {
@@ -130,6 +72,9 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     let pr_count = 0;
     let achievement_count = 0;
 
+    // Needed in archetype data
+    const sport_time_group = new Map();
+
     // Top kudos activity for photos
     // Want top 3, but for now we get 3 most recent with photos
     var activities_with_photos_ids = photos
@@ -158,6 +103,12 @@ function goThroughActivities(activities, photos, current_year = 2022) {
             } else {
                 athlete_count_count[1] += 1
             }
+
+            // Hash a key with sport type, time of day, and solo or group
+            const time_of_day_bucket = getTimeOfDayBucket(date.getHours());
+            const solo_or_group_key = activity["athlete_count"] === 1 ? "solo" : "group";
+            const archetype_key = activity["sport_type"] + "/" + time_of_day_bucket + "/" + solo_or_group_key;
+            sport_time_group.set(archetype_key, sport_time_group.get(archetype_key) === undefined ? 1 : sport_time_group.get(archetype_key) + 1);
 
             // find best 5k, 10k, half marathon, and marathon effort
             // use distance (given in m)
@@ -205,7 +156,7 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     const top_activity_time_of_day = getTopActivityTimeOfDay(hours_map);
 
     // archetype
-    const archetype_data = getArchetypeData(highest_sport_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos);
+    const archetype_data = getArchetypeData(highest_sport_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos, sport_time_group);
     const archetype_colour = stringToColour(archetype_data[1]);
 
     const total_days_active = getTotalDaysActive(dates_map, current_year);
@@ -234,7 +185,8 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         archetype_colour,
         current_year,
         activity_breakdown_map,
-        best_effort_run_list
+        best_effort_run_list,
+        sport_time_group
     ];
 }
 

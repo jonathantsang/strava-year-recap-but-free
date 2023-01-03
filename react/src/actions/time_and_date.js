@@ -101,14 +101,30 @@ export function getTotalDaysActivePercentage(total_days_active) {
     }
 }
 
+export function getTimeOfDayBucket(hour) {
+    if (hour <= 10) {
+        return "morning";
+    } else if (hour <= 13) {
+        return "midday";
+    } else if (hour <= 17) {
+        return "evening";
+    } else {
+        return "night";
+    }
+}
+
 export function getTopActivityTimeOfDay(hours_map) {
     let morning = 0;
+    let midday = 0;
     let evening = 0;
     let night = 0;
     hours_map.forEach (function(value, key) {
-        if (key <= 12) {
-            morning += value
-        } else if (key <= 18) {
+        const time_of_day_bucket = getTimeOfDayBucket(key);
+        if (time_of_day_bucket === "morning") {
+            morning += value;
+        } else if (time_of_day_bucket === "midday") {
+            midday += value;
+        } else if (time_of_day_bucket === "evening") {
             evening += value;
         } else {
             night += value;
@@ -116,10 +132,12 @@ export function getTopActivityTimeOfDay(hours_map) {
     });
 
     // I don't like how this breaks ties
-    // 33 = morning, 66 = evening, 100 = night
-    if (morning >= evening && morning >= night) {
-        return 33;
-    } else if (evening >= morning && evening >= night) {
+    // 25 = morning, 45 = midday, 66 = evening, 100 = night
+    if (morning >= evening && morning >= night && morning >= midday) {
+        return 25;
+    } else if (midday >= morning && midday >= evening && midday >= night) {
+        return 45;
+    } else if (evening >= morning && evening >= midday && evening >= night) {
         return 66;
     } else {
         return 100;

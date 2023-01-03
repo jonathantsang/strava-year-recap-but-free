@@ -1,7 +1,6 @@
 import React from "react";
 
 import { HireMe } from "./components/Extras";
-import { PRCard } from "./components/cards/PRCard";
 
 const { REACT_APP_CLIENT_ID } = process.env;
 //const redirectUrl = "https://strava-year-recap-but-free-x7xf.vercel.app/redirect"

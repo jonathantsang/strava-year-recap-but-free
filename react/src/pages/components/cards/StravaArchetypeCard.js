@@ -1,6 +1,7 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { LargeStyledAvatar, LinearProgressWithFixedLabel } from "../Extras";
 // Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
@@ -17,33 +18,41 @@ export function StravaArchetypeCard(props) {
         </Typography>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour}>
+      <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour} style={{background: 'linear-gradient(rgba(250,0,0,0.9),transparent)'}}>
           {props.top_sport_type.toLowerCase().includes("walk") &&
             <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
-            }
+          }
           {props.top_sport_type.toLowerCase().includes("biking") &&
             <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
           }
           {props.top_sport_type.toLowerCase().includes("run") &&
             <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
           }
+          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("run") &&
+            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("walk") &&
+            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+          }
+          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("biking") &&
+            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
+          }
         </LargeStyledAvatar>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography gutterBottom variant="h4" component="div" margin="0px">
           {props.strava_archetype}
         </Typography>
       </CardContent>
 
-      <CardContent sx={{backgroundColor:'#FEFFFE'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Typography gutterBottom variant="h6" component="div" margin="0px">
           {props.strava_archetype_description}
         </Typography>
         <br />
       </CardContent>
-
       <CardContent sx={{backgroundColor:'#062E4F', color: "white",}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
           MY TOP SPORTS
@@ -57,3 +66,9 @@ export function StravaArchetypeCard(props) {
 }
 
 export default StravaArchetypeCard;
+
+<CardContent sx={{backgroundColor:'#F2F1ED'}}>
+  <CircularProgress color="secondary" />
+  <CircularProgress color="success" />
+  <CircularProgress color="inherit" />
+</CardContent>

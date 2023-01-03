@@ -1,5 +1,11 @@
 export function getArchetypeData(highest_sports_type_counts, total_year_activities, athlete_count_count, top_activity_time_of_day, total_kudos, sport_time_group) {
     // remove commutes on ebike?
+    // Gradients
+    let gradient_colour = "";
+    const morning_gradient = "linear-gradient(156deg, rgba(2,0,36,1) 0%, rgba(122,61,61,1) 27%, rgba(187,135,93,1) 49%, rgba(216,0,255,1) 71%)";
+    const midday_gradient = "linear-gradient(142deg, rgba(2,0,36,1) 0%, rgba(61,122,90,1) 27%, rgba(165,187,93,1) 49%, rgba(255,134,0,1) 71%)";
+    const evening_gradient = "linear-gradient(156deg, rgba(2,0,36,1) 0%, rgba(61,93,122,1) 27%, rgba(93,187,158,1) 49%, rgba(160,0,255,1) 71%)";
+    const night_gradient = "linear-gradient(156deg, rgba(2,0,36,1) 0%, rgba(61,61,122,1) 35%, rgba(48,47,102,1) 53%, rgba(0,212,255,1) 100%)";
 
     let sport_balance_text = "";
     let athlete_count_text = "";
@@ -74,15 +80,19 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
     if (morning === Math.max(morning, midday, evening, night)) {
         time_of_day_text = "You must be a morning person because mornings are your most popular time of day.";
         time_of_day_title_text = "Morning";
+        gradient_colour = morning_gradient;
     } else if (midday === Math.max(morning, midday, evening, night)) {
         time_of_day_text = "You get most activities done in the daylight";
         time_of_day_title_text = "Midday";
+        gradient_colour = midday_gradient;
     } else if (evening === Math.max(morning, midday, evening, night)){
         time_of_day_text = "You get most activities done during the afternoon and evening.";
         time_of_day_title_text = "Evening";
+        gradient_colour = evening_gradient;
     } else {
         time_of_day_text = "Look at this night owl! You get most activities done during the night.";
         time_of_day_title_text = "Night";
+        gradient_colour = night_gradient;
     }
 
     if (total_kudos >= 10000) {
@@ -102,5 +112,5 @@ export function getArchetypeData(highest_sports_type_counts, total_year_activiti
 
     let description = `${sport_balance_text} ${athlete_count_text} ${time_of_day_text} ${kudos_count_text}`
     let title = `${athlete_count_title_text} ${time_of_day_title_text} ${athlete_type_title_text}`
-    return [title, description]
+    return [title, description, gradient_colour]
 }

@@ -30,13 +30,13 @@ export function StravaArchetypeCard(props) {
             <DirectionsRun sx={{width: "5rem", height: "5rem", opacity: "70%"}}/>
           }
           {props.top_sport_type.toLowerCase().includes("walk") &&
-            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem"}}/>
+            <DirectionsWalkIcon sx={{width: "5rem", height: "5rem", opacity: "85%"}}/>
           }
           {props.top_sport_type.toLowerCase().includes("biking") &&
-            <DirectionsBike sx={{width: "5rem", height: "5rem"}}/>
+            <DirectionsBike sx={{width: "5rem", height: "5rem", opacity: "85%"}}/>
           }
           {props.top_sport_type.toLowerCase().includes("run") &&
-            <DirectionsRun sx={{width: "5rem", height: "5rem"}}/>
+            <DirectionsRun sx={{width: "5rem", height: "5rem", opacity: "85%"}}/>
           }
         </LargeStyledAvatar>
       </CardContent>

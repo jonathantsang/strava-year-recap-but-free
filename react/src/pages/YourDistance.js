@@ -5,13 +5,22 @@ import { HireMe } from "./components/Extras";
 import { ActivityBreakdownCard } from "./components/cards/ActivityBreakdownCard";
 import { StravaArchetypeCard } from "./components/cards/StravaArchetypeCard";
 import { PRCard } from "./components/cards/PRCard";
+import { YearCollageCard, YearCollagePoster } from "./components/cards/YearCollageCard";
 
 const YourDistance = ({ user, athlete, activities, returnTokens }) => {
-    console.log(activities);
-    // console.log(returnTokens); // accessToken
     return (
         <div>
             <HireMe />
+
+            <YearCollagePoster current_year={activities[17]}
+                               photos_urls={activities[20]}/>
+
+            <br />
+
+            <YearCollageCard current_year={activities[17]}
+                             photos_urls={activities[20]}/>
+
+            <br />
 
             <PRCard current_year={activities[17]}
                     part_one_title={activities[19][0][1]}

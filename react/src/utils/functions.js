@@ -78,12 +78,20 @@ export const getActivities = async (accessToken, per_page = 5, page = 1) => {
 };
 
 // This gets the photos from the DETAILED activity from a separate api call
-// this probably leaks async threads since we exit early but it is better that than
+// Issues:
+// 1. this probably leaks async threads since we exit early but it is better that than
 // trying to get EVERY activity with a photo
+// 2. this only pulls the MOST RECENT photos
+
+// Solution?
+// sort the activities by kudos_count which is n=800, O(800*log(800))
 export const getPhotos = async (accessToken, activities, num_photos = 3, current_year = 2022) => {
+    // Sort activities and hope it doesn't need ordering later on :D
+    activities.data.sort(function(a,b){ return b["kudos_count"] - a["kudos_count"]});
+
     const urls = []
     for(var i = 0; i < activities.data.length; i++) {
-        // Only need 3 photos
+        // Only need num_photos number of photos
         if (urls.length >= num_photos) {
             break;
         } else {
@@ -93,7 +101,8 @@ export const getPhotos = async (accessToken, activities, num_photos = 3, current
             if (activity["total_photo_count"] - activity["photo_count"] && date.getFullYear() === current_year) {
                 var detailed_activity = await getDetailedActivity(accessToken, activity["id"], urls);
                 detailed_activity = detailed_activity.data;
-                urls.push([detailed_activity["name"], date.toDateString(), detailed_activity["photos"]["primary"]["urls"][600]]);
+                // Do the split on ? since videos use prepended args and then we put more in the image list for the year collage and it messes it up
+                urls.push([detailed_activity["name"], date.toDateString(), detailed_activity["photos"]["primary"]["urls"][600].split("?")[0]]);
             }
         }
     }

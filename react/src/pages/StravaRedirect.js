@@ -50,8 +50,10 @@ class StravaRedirect extends React.Component {
                 const page3 = await getActivities(accessToken, pagination_amount, 3);
                 const page4 = await getActivities(accessToken, pagination_amount, 4);
 
-                // Maybe change numPhotos > 3? and current year = 2022
-                const photos = await getPhotos(accessToken, activities, 3, 2022);
+                // Maybe change photo_search_amount
+                // Playing with fire here, We do 4 calls for activities (4*200=800, and 20 calls on photos so each person is 24 out of 1000 daily calls)
+                const photo_search_amount = 20;
+                const photos = await getPhotos(accessToken, activities, photo_search_amount, 2022);
 
                 this.props.setUserActivities(user);
                 this.props.setAthlete(athlete);

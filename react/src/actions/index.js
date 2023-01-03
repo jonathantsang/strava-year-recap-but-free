@@ -47,6 +47,14 @@ function getActivityBreakdownMap(highest_sport_type_counts, total_year_activitie
     return res;
 }
 
+function getPhotosUrls(photos) {
+    const photos_urls_list = [];
+    photos.forEach( function(item, index, arr) {
+        photos_urls_list.push({src: item[2], title: item[0]})
+    });
+    console.log(photos_urls_list);
+    return photos_urls_list;
+}
 
 // Goes through the activities for analyzing data
 // dates_map: key: Date object -> number of activities with that date (this is kind of useless, might change it)
@@ -75,9 +83,10 @@ function goThroughActivities(activities, photos, current_year = 2022) {
     // Needed in archetype data
     const sport_time_group = new Map();
 
-    // Top kudos activity for photos
-    // Want top 3, but for now we get 3 most recent with photos
+    // Top kudos activity for photos?
     var activities_with_photos_ids = photos
+
+    const photos_urls = getPhotosUrls(photos);
 
     // We do a bunch of stuff in one loop to save on loop computations because we potentially go through up to 800 activities
     for (const activity of activities) {
@@ -186,7 +195,7 @@ function goThroughActivities(activities, photos, current_year = 2022) {
         current_year,
         activity_breakdown_map,
         best_effort_run_list,
-        sport_time_group
+        photos_urls,
     ];
 }
 

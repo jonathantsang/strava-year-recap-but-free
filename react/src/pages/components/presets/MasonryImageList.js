@@ -6,7 +6,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 // Should set columns based on how many photos you have
 export function MasonryImageList(props) {
   return (
-    <Box sx={{ width: 400, height: 800, overflowY: 'scroll' }}>
+    <Box sx={{ width: 400, height: 800, overflowY: 'hidden' }}>
       <ImageList variant="masonry" cols={3} gap={4}>
         {props.photos_urls && props.photos_urls.map((item) => (
           <ImageListItem key={item.src}>
@@ -25,7 +25,7 @@ export function MasonryImageList(props) {
 
 export function MasonryImageLargeList(props) {
   return (
-    <Box sx={{ width: 1200, height: 900, overflowY: 'scroll' }}>
+    <Box sx={{ width: 1200, height: 900, overflowY: 'hidden' }}>
       <ImageList variant="masonry" cols={5} gap={4}>
         {props.photos_urls && props.photos_urls.map((item) => (
           <ImageListItem key={item.src}>

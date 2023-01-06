@@ -30,6 +30,12 @@ website or email the result?
 
 - speed doesn't matter
 
+## Names?
+```
+Strava Summary
+Athlete Archetype
+```
+
 ```
 Single activity - athlete (general bucket)
 Duathlete

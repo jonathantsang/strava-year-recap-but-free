@@ -22,5 +22,6 @@
 
 # Jan 4, 2022
 - fix index.js return mess (archetype colour is deprecated)
+- save photos functionality on mobile
 - do promo art
 - figure out hosting?

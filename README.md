@@ -18,6 +18,7 @@ Strava year in review has:
 Resources:
 - https://www.grace-dev.com/python-apis/strava-api/
 - https://github.com/dunleavyjack/Strava-OAuth2-Test
+- https://www.cluemediator.com/convert-html-element-or-document-into-image-in-react
 
 ## Running Locally
 

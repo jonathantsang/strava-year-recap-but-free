@@ -24,10 +24,10 @@ export function StravaArchetypeCard(props) {
 
       <CardContent sx={{backgroundColor:'#F2F1ED'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <LargeStyledAvatar height="200px" width="200px" bgcolor={props.strava_archetype_colour} style={{background: props.strava_archetype_gradient_colour, borderRadius: "25%"}}>
-          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("biking") &&
+          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("walk") &&
             <DirectionsWalkIcon sx={{width: "5rem", height: "5rem", opacity: "70%"}}/>
           }
-          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("walk") &&
+          {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("biking") &&
             <DirectionsBike sx={{width: "5rem", height: "5rem", opacity: "70%"}}/>
           }
           {props.strava_archetype.toLowerCase().includes("group") && props.top_sport_type.toLowerCase().includes("run") &&

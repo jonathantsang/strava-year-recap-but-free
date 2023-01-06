@@ -68,7 +68,6 @@ export function PRCard(props) {
         </Typography>
       </CardContent>
      </div>
-     <ShareButton propRef={props.propRef}/>
   </Card>
   );
 }

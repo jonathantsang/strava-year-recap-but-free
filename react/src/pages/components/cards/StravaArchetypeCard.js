@@ -66,7 +66,6 @@ export function StravaArchetypeCard(props) {
         <LinearProgressWithFixedLabel variant="determinate" value={props.sport_three} front={props.sport_three_name} back=""/>
       </CardContent>
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }

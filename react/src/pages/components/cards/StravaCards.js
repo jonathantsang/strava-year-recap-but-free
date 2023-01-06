@@ -83,7 +83,6 @@ export function TotalsCard(props) {
         </Typography>
       </CardContent>
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -125,7 +124,6 @@ export function TopPercentCard(props) {
         </Typography>
       </CardContent>
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -188,7 +186,6 @@ export function TopPhotosCard(props) {
         </CardContent>
       </CardContent>
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -234,7 +231,6 @@ export function TotalElevationTotalDistanceCard(props) {
       </CardContent>
 
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -288,7 +284,6 @@ export function AchievementsCard(props) {
       </CardContent>
 
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }
@@ -334,7 +329,6 @@ export function TotalDaysActiveCard(props) {
       </CardContent> }
 
       </div>
-      <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }

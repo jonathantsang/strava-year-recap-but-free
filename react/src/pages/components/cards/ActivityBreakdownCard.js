@@ -21,7 +21,6 @@ export function ActivityBreakdownCard(props) {
         <PieChart {...props} />
       </CardContent>
      </div>
-     <ShareButton propRef={props.propRef}/>
     </Card>
   );
 }

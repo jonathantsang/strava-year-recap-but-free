@@ -7,7 +7,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 export function MasonryImageList(props) {
   return (
     <Box sx={{ width: 400, height: 800, overflowY: 'hidden' }}>
-      <ImageList variant="masonry" cols={3} gap={4}>
+      <ImageList variant="masonry" cols={2} gap={4}>
         {props.photos_urls && props.photos_urls.map((item) => (
           <ImageListItem key={item.src}>
             <img

@@ -2,6 +2,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { ShareButton } from '../utils/Download';
+import { CardBanner } from '../strava/Strava';
 
 // Icons
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -17,11 +18,7 @@ export function PRCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <CardContent header sx={{backgroundColor:'black'}}>
-        <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
-          Strava Year in Review but Free
-        </Typography>
-      </CardContent>
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h4" component="div" margin="0px">

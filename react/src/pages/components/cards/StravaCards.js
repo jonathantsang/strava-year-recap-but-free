@@ -1,11 +1,9 @@
 import { StyledAvatar, LargeStyledAvatar, LinearProgressWithLabel } from "../Extras";
-import { StravaBanner } from "../strava/Strava";
+import { CardBanner } from "../strava/Strava";
 import { ShareButton } from '../utils/Download';
 
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 // Icons
 import DirectionsRun from '@mui/icons-material/DirectionsRun';
@@ -19,7 +17,7 @@ export function TotalsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -28,7 +26,7 @@ export function TotalsCard(props) {
       </CardContent>
 
       <CardContent sx={{backgroundColor:'#F4F4DB', display: "flex", justifyContent: "space-between", alignItems: 'center', outline: "black 2px solid" }}>
-        <StyledAvatar crossOrigin="true" alt="Strava user" src={props.avatar_src} />
+        <StyledAvatar alt="Strava user" src={props.avatar_src} />
         <Typography variant="h5" color="text.primary">
           {props.first_name} {props.last_name}
         </Typography>
@@ -94,7 +92,7 @@ export function TopPercentCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -136,7 +134,7 @@ export function TopPhotosCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 1200 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -199,7 +197,7 @@ export function TotalElevationTotalDistanceCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -245,7 +243,7 @@ export function AchievementsCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">
@@ -299,7 +297,7 @@ export function TotalDaysActiveCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <StravaBanner />
+      <CardBanner />
 
       <CardContent sx={{backgroundColor:'#FEFFFE', outline: "black 2px solid"}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px">

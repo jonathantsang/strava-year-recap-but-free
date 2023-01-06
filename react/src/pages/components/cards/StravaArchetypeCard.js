@@ -13,9 +13,12 @@ export function StravaArchetypeCard(props) {
   return (
     <Card sx={{ maxWidth: 400, maxHeight: 800 }}>
       <div ref={props.propRef}>
-      <CardContent header sx={{backgroundColor:'black', color: 'white'}} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CardContent header sx={{backgroundColor:'black', color: 'white'}}>
         <Typography gutterBottom variant="h4" component="div" margin="0px">
           My Athlete Archetype
+        </Typography>
+        <Typography variant="subtitle2" sx={{color:'white'}}>
+          SPORTRECAP.APP
         </Typography>
       </CardContent>
 

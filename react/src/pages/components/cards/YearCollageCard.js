@@ -10,8 +10,10 @@ export function YearCollageCard(props) {
         <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           My {props.current_year} on Strava
         </Typography>
+        <Typography variant="subtitle2" sx={{color:'white'}}>
+          SPORTRECAP.APP
+        </Typography>
       </CardContent>
-
       <MasonryImageList {...props}/>
     </Card>
   );
@@ -23,6 +25,9 @@ export function YearCollagePoster(props) {
       <CardContent header sx={{backgroundColor:'black'}}>
         <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
           My {props.current_year} on Strava
+        </Typography>
+        <Typography variant="subtitle2" sx={{color:'white'}}>
+          SPORTRECAP.APP
         </Typography>
       </CardContent>
       <MasonryImageLargeList {...props}/>

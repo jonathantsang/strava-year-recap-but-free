@@ -1,6 +1,8 @@
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 
 export function DownloadButton(props) {
@@ -34,5 +36,15 @@ export function ShareButton(props) {
         <CardActions>
           <Button size="small" onClick={onButtonClick}>SHARE</Button>
         </CardActions>
+    );
+}
+
+export const PromoFooter = () => {
+    return (
+        <CardContent header sx={{backgroundColor:'black'}}>
+          <Typography gutterBottom variant="h5" component="div" margin="0px" sx={{color:'white'}}>
+            PRESENTED BY SPORTRECAP.APP
+          </Typography>
+        </CardContent>
     );
 }

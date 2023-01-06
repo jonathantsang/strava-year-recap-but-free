@@ -25,15 +25,19 @@ const YourDistance = ({ user, athlete, activities, returnTokens }) => {
 
     //console.log(activities);
     // console.log(returnToken); // accessToken
+
+
+// <LogOutButton onClick={goHome}/>
+
+                // <YearCollagePoster current_year={activities[17]}
+                //                    photos_urls={activities[20]}
+                //                    propRef={posterRef}/>
     return (
         <div>
-            <LogOutButton onClick={goHome}/>
+
 
             <HireMe />
 
-            <YearCollagePoster current_year={activities[17]}
-                               photos_urls={activities[20]}
-                               propRef={posterRef}/>
 
             <br />
 

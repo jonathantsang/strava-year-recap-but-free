@@ -3,7 +3,7 @@
 This is against their API TOS:
 
 Check it out here:
-[https://strava-year-recap-but-free-x7xf.vercel.app/](https://strava-year-recap-but-free-x7xf.vercel.app/)
+[https://sportrecap.app/](https://sportrecap.app)
 
 Strava year in review has:
 - 2 useless panels
